@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- Arguments to the static factory method are supplied via <constructor-arg/> 
+		elements -->
+	<bean id="exampleBean" class="instanceBean.ExampleBean"
+		factory-method="createInstance">
+		<constructor-arg name="arg1" ref="a" />
+		<constructor-arg name="arg2" value="123" />
+	</bean>
+
+	<!-- The depends-on attribute can explicitly force one or more beans to 
+		be initialized before the bean using this element is initialized -->
+	<bean id="a" class="instanceBean.BeanA" init-method="init"
+		destroy-method="clean" depends-on="c,f">
+		<property name="property" value="abc" />
+		<property name="beanE" ref="e" />
+	</bean>
+
+	<bean id="c" class="instanceBean.BeanC" parent="d"
+		lazy-init="true">
+		<property name="age" value="override" />
+	</bean>
+
+	<bean id="d" class="instanceBean.BeanD" abstract="true" />
+</beans>

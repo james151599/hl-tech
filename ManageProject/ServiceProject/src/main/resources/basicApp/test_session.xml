@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- an HTTP Session-scoped bean exposed as a proxy -->
+	<bean id="userPreferences" class="com.foo.UserPreferences"
+		scope="session">
+		<!-- instructs the container to proxy the surrounding bean -->
+		<!-- by default, a CGLIB-based class proxy is created -->
+		<aop:scoped-proxy />
+	</bean>
+
+	<bean id="userPreferences2"
+		class="com.stuff.DefaultUserPreferences" scope="session">
+		<!-- create standard JDK interface-based proxy -->
+		<aop:scoped-proxy proxy-target-class="false" />
+	</bean>
+
+	<!-- a singleton-scoped bean injected with a proxy to the above bean -->
+	<bean id="userService" class="com.foo.SimpleUserService">
+		<property name="prop1" ref="userPreferences" />
+		<property name="prop2" ref="userPreferences2" />
+	</bean>
+
+	<!-- CGLIB proxies only intercept public method calls -->
+</beans>

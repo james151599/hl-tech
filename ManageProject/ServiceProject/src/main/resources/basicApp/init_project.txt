@@ -1,0 +1,62 @@
+1.设置settings.xml的阿里镜像和默认编译
+    <profile>
+      <id>jdk-1.8</id>
+      <activation>
+        <jdk>1.8</jdk>
+      </activation>
+      <properties>
+        <tomcatPath>E:/apache-tomcat-9.0.13</tomcatPath>
+      </properties>
+    </profile>
+
+2.创建maven webapp工程，添加源文件目录配置部署路径
+src/main/java
+src/main/resources
+src/test/java
+src/test/resources
+
+3.设置工程的编译
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.0</version>
+        <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+        </configuration>
+    </plugin>
+
+4.修改web.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>web-tech</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>
+
+5.修改工程根.settings/org.eclipse.wst.common.project.facet.core.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<faceted-project>
+  <fixed facet="wst.jsdt.web"/>
+  <installed facet="wst.jsdt.web" version="1.0"/>
+  <installed facet="java" version="1.8"/>
+  <installed facet="jst.web" version="3.0"/>
+</faceted-project>
+
+6.catalina.bat最前面设置JAVA_HOME
+set JAVA_HOME=E:\Java\jdk1.8.0_181
+set JAVA_OPTS=%JAVA_OPTS% -server -XX:PermSize=256M -XX:MaxPermSize=637M
+
+Maven -> Update Project...
+
+代码样式
+https://github.com/google/styleguide
