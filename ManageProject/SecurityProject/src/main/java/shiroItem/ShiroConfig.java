@@ -4,10 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -26,8 +29,24 @@ public class ShiroConfig {
   }
 
   @Bean
-  public SecurityManager securityManager(Realm oneRealm) {
+  public SecurityManager securityManager(Realm oneRealm, SessionManager sm) {
     DefaultWebSecurityManager dwsm = new DefaultWebSecurityManager(oneRealm);
+    dwsm.setSessionManager(sm);
+    return dwsm;
+  }
+
+  @Bean
+  public SessionManager sessionManager() {
+    DefaultWebSessionManager dwsm = new DefaultWebSessionManager();
+    dwsm.setGlobalSessionTimeout(600000);
+    SimpleCookie sc = new SimpleCookie();
+    sc.setName("JSESSIONID");
+    // 设置 Cookie 的过期时间,秒为单位
+    sc.setMaxAge(360000);
+    // 客户端不会暴露给客户端脚本代码,有助于减少某些类型的跨站点脚本攻击
+    sc.setHttpOnly(true);
+    dwsm.setSessionIdCookie(sc);
+    dwsm.setSessionIdCookieEnabled(true);
 
     return dwsm;
   }
@@ -39,6 +58,7 @@ public class ShiroConfig {
     Map<String, String> urlPermission = new HashMap<>();
     urlPermission.put("/testShiro/index", "anon");
     urlPermission.put("/testShiro/login", "anon");
+    urlPermission.put("/testShiro/logout", "logout");
     urlPermission.put("/testShiro/doInsert", "authc");
     urlPermission.put("/testShiro/doDelete", "authc");
     urlPermission.put("/testShiro/doUpdate", "authc");
