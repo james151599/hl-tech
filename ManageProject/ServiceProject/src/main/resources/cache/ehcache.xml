@@ -10,7 +10,10 @@
 
 	<cache name="cacheObj" maxElementsInMemory="1000"
 		timeToIdleSeconds="10" timeToLiveSeconds="10" />
-
+	<cache name="shiro-activeSessionCache"
+		maxElementsInMemory="10000" overflowToDisk="true" eternal="true"
+		timeToLiveSeconds="0" timeToIdleSeconds="0" diskPersistent="true"
+		diskExpiryThreadIntervalSeconds="600" />
 <!--
 	name：缓存名称
 	maxElementsInMemory：缓存最大个数

@@ -9,5 +9,5 @@
 
 	<context:annotation-config />
 
-	<bean class="shiroItem.ShiroConfig" />
+	<bean class="shiro.ShiroConfig" />
 </beans>

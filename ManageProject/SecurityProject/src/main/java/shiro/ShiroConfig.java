@@ -1,10 +1,13 @@
-package shiroItem;
+package shiro;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.session.mgt.SessionManager;
+import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -12,26 +15,19 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
 @Configuration
+@ComponentScan
 public class ShiroConfig {
 
   @Bean
-  public RolesPermissions myRolesPermissions() {
-    return new RolesPermissions();
-  }
-
-  @Bean
-  public Realm myRealm() {
-    return new MyRealm();
-  }
-
-  @Bean
-  public SecurityManager securityManager(Realm oneRealm, SessionManager sm) {
+  public SecurityManager securityManager(Realm oneRealm, SessionManager sm, CacheManager cm) {
     DefaultWebSecurityManager dwsm = new DefaultWebSecurityManager(oneRealm);
     dwsm.setSessionManager(sm);
+    dwsm.setCacheManager(cm);
     return dwsm;
   }
 
@@ -48,7 +44,18 @@ public class ShiroConfig {
     dwsm.setSessionIdCookie(sc);
     dwsm.setSessionIdCookieEnabled(true);
 
+    EnterpriseCacheSessionDAO ecsDao = new EnterpriseCacheSessionDAO();
+    ecsDao.setActiveSessionsCacheName("shiro-activeSessionCache");
+    dwsm.setSessionDAO(ecsDao);
+
     return dwsm;
+  }
+
+  @Bean
+  public CacheManager cacheManager() {
+    EhCacheManager ehCache = new EhCacheManager();
+    ehCache.setCacheManagerConfigFile("classpath:cache/ehcache.xml");
+    return ehCache;
   }
 
   @Bean

@@ -35,7 +35,7 @@ public class ShiroController {
       System.out.println("getStartTimestamp: " + session.getStartTimestamp() + "getLastAccessTime: "
           + session.getLastAccessTime());
       // JavaSE应用需要自己定期调用session.touch();去更新最后访问时间
-      session.setAttribute("test", "test");
+      session.setAttribute("someKey", "someValue");
 
     } catch (AuthenticationException e) {
       result = "login failure: " + e.getMessage();
