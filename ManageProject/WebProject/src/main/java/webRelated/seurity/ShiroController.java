@@ -4,7 +4,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
@@ -51,20 +50,21 @@ public class ShiroController {
     return "logout";
   }
 
-  @RequiresRoles("role1")
+  @RequiresPermissions("role2:insert")
   @PostMapping("/doInsert")
   @ResponseBody
   public String doInsert() {
     return "do insert";
   }
 
+  @RequiresPermissions("role2:delete")
   @PostMapping("/doDelete")
   @ResponseBody
   public String doDelete() {
     return "do delete";
   }
 
-  @RequiresPermissions("role2:update")
+  @RequiresPermissions("role1:update")
   @PostMapping("/doUpdate")
   @ResponseBody
   public String doUpdate() {

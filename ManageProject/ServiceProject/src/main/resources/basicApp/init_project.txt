@@ -60,3 +60,5 @@ Maven -> Update Project...
 
 代码样式
 https://github.com/google/styleguide
+
+XML文件偶尔报错，右键菜单点击Validate

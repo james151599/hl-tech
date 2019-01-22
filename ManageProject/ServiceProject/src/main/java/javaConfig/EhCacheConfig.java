@@ -13,12 +13,12 @@ import net.sf.ehcache.CacheManager;
 public class EhCacheConfig {
 
   @Bean
-  public EhCacheCacheManager cacheManager(CacheManager cm) {
+  public EhCacheCacheManager springCacheManager(CacheManager cm) {
     return new EhCacheCacheManager(cm);
   }
 
   @Bean
-  public EhCacheManagerFactoryBean ehcache() {
+  public EhCacheManagerFactoryBean ehCacheManager() {
     EhCacheManagerFactoryBean emfb = new EhCacheManagerFactoryBean();
     emfb.setConfigLocation(new ClassPathResource("cache/ehcache.xml"));
     return emfb;

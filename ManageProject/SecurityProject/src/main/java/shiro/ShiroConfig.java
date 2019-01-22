@@ -18,9 +18,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Import;
+import javaConfig.EhCacheConfig;
 
 @Configuration
 @ComponentScan
+@Import({EhCacheConfig.class})
+@EnableAspectJAutoProxy
 public class ShiroConfig {
 
   @Bean
@@ -52,9 +57,9 @@ public class ShiroConfig {
   }
 
   @Bean
-  public CacheManager cacheManager() {
+  public CacheManager shiroCacheManager(net.sf.ehcache.CacheManager cm) {
     EhCacheManager ehCache = new EhCacheManager();
-    ehCache.setCacheManagerConfigFile("classpath:cache/ehcache.xml");
+    ehCache.setCacheManager(cm);
     return ehCache;
   }
 
@@ -75,13 +80,13 @@ public class ShiroConfig {
     return sffb;
   }
 
-  // @Bean
-  // public MethodInvokingFactoryBean getMethodInvokingFactoryBean(SecurityManager sm) {
-  // MethodInvokingFactoryBean factoryBean = new MethodInvokingFactoryBean();
-  // factoryBean.setStaticMethod("org.apache.shiro.SecurityUtils.setSecurityManager");
-  // factoryBean.setArguments(new Object[] {sm});
-  // return factoryBean;
-  // }
+//  @Bean
+//  public MethodInvokingFactoryBean getMethodInvokingFactoryBean(SecurityManager sm) {
+//    MethodInvokingFactoryBean factoryBean = new MethodInvokingFactoryBean();
+//    factoryBean.setStaticMethod("org.apache.shiro.SecurityUtils.setSecurityManager");
+//    factoryBean.setArguments(new Object[] {sm});
+//    return factoryBean;
+//  }
 
   @Bean
   public LifecycleBeanPostProcessor shiroProcessor() {
