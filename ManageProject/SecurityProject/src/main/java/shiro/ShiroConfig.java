@@ -2,6 +2,7 @@ package shiro;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
@@ -18,14 +19,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 import javaConfig.EhCacheConfig;
+import shiro.shiroApp.ShiroService;
+import shiro.shiroItem.MyRealm;
 
 @Configuration
 @ComponentScan
 @Import({EhCacheConfig.class})
-@EnableAspectJAutoProxy
 public class ShiroConfig {
 
   @Bean
@@ -33,7 +34,25 @@ public class ShiroConfig {
     DefaultWebSecurityManager dwsm = new DefaultWebSecurityManager(oneRealm);
     dwsm.setSessionManager(sm);
     dwsm.setCacheManager(cm);
+
     return dwsm;
+  }
+
+  @Bean
+  public Realm myRealm(ShiroService ss, HashedCredentialsMatcher hcm) {
+    MyRealm mr = new MyRealm(ss);
+    mr.setCredentialsMatcher(hcm);
+
+    return mr;
+  }
+
+  @Bean
+  public HashedCredentialsMatcher credential() {
+    HashedCredentialsMatcher hcm = new HashedCredentialsMatcher();
+    hcm.setHashAlgorithmName("SHA-512");
+    hcm.setHashIterations(3);
+
+    return hcm;
   }
 
   @Bean
@@ -41,7 +60,7 @@ public class ShiroConfig {
     DefaultWebSessionManager dwsm = new DefaultWebSessionManager();
     dwsm.setGlobalSessionTimeout(600000);
     SimpleCookie sc = new SimpleCookie();
-    sc.setName("JSESSIONID");
+    sc.setName("shiroCookie");
     // 设置 Cookie 的过期时间,秒为单位
     sc.setMaxAge(360000);
     // 客户端不会暴露给客户端脚本代码,有助于减少某些类型的跨站点脚本攻击
@@ -60,6 +79,7 @@ public class ShiroConfig {
   public CacheManager shiroCacheManager(net.sf.ehcache.CacheManager cm) {
     EhCacheManager ehCache = new EhCacheManager();
     ehCache.setCacheManager(cm);
+
     return ehCache;
   }
 
@@ -75,18 +95,19 @@ public class ShiroConfig {
     urlPermission.put("/testShiro/doDelete", "authc");
     urlPermission.put("/testShiro/doUpdate", "authc");
     urlPermission.put("/testShiro/doView", "authc");
+    sffb.setLoginUrl("/testShiro/index");
     sffb.setFilterChainDefinitionMap(urlPermission);
 
     return sffb;
   }
 
-//  @Bean
-//  public MethodInvokingFactoryBean getMethodInvokingFactoryBean(SecurityManager sm) {
-//    MethodInvokingFactoryBean factoryBean = new MethodInvokingFactoryBean();
-//    factoryBean.setStaticMethod("org.apache.shiro.SecurityUtils.setSecurityManager");
-//    factoryBean.setArguments(new Object[] {sm});
-//    return factoryBean;
-//  }
+  // @Bean
+  // public MethodInvokingFactoryBean getMethodInvokingFactoryBean(SecurityManager sm) {
+  // MethodInvokingFactoryBean factoryBean = new MethodInvokingFactoryBean();
+  // factoryBean.setStaticMethod("org.apache.shiro.SecurityUtils.setSecurityManager");
+  // factoryBean.setArguments(new Object[] {sm});
+  // return factoryBean;
+  // }
 
   @Bean
   public LifecycleBeanPostProcessor shiroProcessor() {
@@ -98,6 +119,7 @@ public class ShiroConfig {
   public AuthorizationAttributeSourceAdvisor shiroAdvisor(SecurityManager sm) {
     AuthorizationAttributeSourceAdvisor aasa = new AuthorizationAttributeSourceAdvisor();
     aasa.setSecurityManager(sm);
+
     return aasa;
   }
 }

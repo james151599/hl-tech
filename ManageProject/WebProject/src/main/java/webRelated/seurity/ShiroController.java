@@ -50,6 +50,11 @@ public class ShiroController {
     return "logout";
   }
 
+  @GetMapping("/unauthorized")
+  public String unauthorized() {
+    return "shiroUnauthorized";
+  }
+
   @RequiresPermissions("role2:insert")
   @PostMapping("/doInsert")
   @ResponseBody

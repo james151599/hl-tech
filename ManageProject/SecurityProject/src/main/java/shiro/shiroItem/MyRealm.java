@@ -8,20 +8,22 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.apache.shiro.util.ByteSource;
 import shiro.shiroApp.ShiroService;
 
-@Component
 public class MyRealm extends AuthorizingRealm {
 
   private ShiroService ss;
 
-  @Autowired
+  private final String privateSalt = "HL";
+
   public MyRealm(ShiroService ss) {
     this.ss = ss;
   }
@@ -48,7 +50,10 @@ public class MyRealm extends AuthorizingRealm {
       throw new UnknownAccountException("UnknownAccountException");
     }
 
-    return new SimpleAuthenticationInfo(username, user.get(username), getName());
+    SimpleAuthenticationInfo sai =
+        new SimpleAuthenticationInfo(username, cryptography(user.get(username)), getName());
+    sai.setCredentialsSalt(ByteSource.Util.bytes(privateSalt));
+    return sai;
   }
 
   @Override
@@ -59,5 +64,18 @@ public class MyRealm extends AuthorizingRealm {
   @Override
   public String getName() {
     return "MyRealm";
+  }
+
+  private String cryptography(String password) {
+    SecureRandomNumberGenerator srng = new SecureRandomNumberGenerator();
+    srng.setSeed(privateSalt.getBytes());
+    System.out.println(srng);
+    return new SimpleHash("SHA-512", password, privateSalt, 3).toString();
+  }
+
+  @Override
+  public void setCredentialsMatcher(CredentialsMatcher credentialsMatcher) {
+    // TODO Auto-generated method stub
+    super.setCredentialsMatcher(credentialsMatcher);
   }
 }

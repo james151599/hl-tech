@@ -15,4 +15,4 @@
 		cache-period="31556926" />
 
 	<bean class="webRelated.javaConfig.WebConfig" />
-</beans>        
+</beans>
