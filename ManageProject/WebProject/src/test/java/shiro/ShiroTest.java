@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.DelegatingFilterProxy;
+import shiro.shiroItem.ShiroUtil;
 import webRelated.javaConfig.WebConfig;
 
 
@@ -41,5 +42,13 @@ public class ShiroTest {
             .param("password", "123"))
         .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
     System.out.println(result);
+  }
+
+  @Test
+  public void testEncryption() {
+    String publicSalt = ShiroUtil.generatePublicSalt();
+    System.out.println(publicSalt);
+    String secret = ShiroUtil.encryption("password1", publicSalt);
+    System.out.println(secret + "   " + secret.length());
   }
 }

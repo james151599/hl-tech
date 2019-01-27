@@ -1,4 +1,4 @@
-package shiro.shiroApp;
+package shiro.shiroService;
 
 import java.util.Map;
 import java.util.Set;

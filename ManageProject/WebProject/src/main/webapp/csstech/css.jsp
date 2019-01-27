@@ -8,10 +8,11 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title></title>
-<link href="${baseUrl}/css/style.css" rel="stylesheet" type="text/css" />
+<link href="${baseUrl}/static/css/style.css" rel="stylesheet"
+	type="text/css" />
 <style type="text/css">
 li[data-custom*="bcd"] {
-	background-image: url(${baseUrl}/image/icon.png);
+	background-image: url(${baseUrl}/static/image/icon.png);
 	background-repeat: x;
 	background-position: center;
 	border-style: outset;
@@ -51,7 +52,8 @@ li[data-custom*="bcd"] {
 	<ul>
 		<li style="float: left;"><a href="http://www.w3school.com.cn"
 			target="_blank">a link</a></li>
-		<li style="float: left;"><a href="http://www.w3school.com.cn/example/csse_examples.asp"
+		<li style="float: left;"><a
+			href="http://www.w3school.com.cn/example/csse_examples.asp"
 			target="_blank">b link</a></li>
 	</ul>
 	<p>

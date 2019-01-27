@@ -1,10 +1,11 @@
-package shiro.shiroApp;
+package shiro.shiroService.impl;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import org.springframework.stereotype.Service;
+import shiro.shiroService.ShiroService;
 
 @Service
 public class ShiroServiceImpl implements ShiroService {
@@ -12,7 +13,8 @@ public class ShiroServiceImpl implements ShiroService {
   @Override
   public Map<String, String> namePassword() {
     Map<String, String> up = new HashMap<String, String>();
-    up.put("name1", "password1");
+    up.put("name1",
+        "fd0c5c358de2471103e3282e0ba7b534367a58d68b2aaada8b484d9eff70e16aa31aa2f0de9d82fb8e8ce78c83614f1bd452357e1f791d6cbd155cc63f9929cf");
     up.put("name2", "password2");
 
     return up;
@@ -23,15 +25,20 @@ public class ShiroServiceImpl implements ShiroService {
     Map<String, Map<String, Set<String>>> urp = new HashMap<>();
     Map<String, Set<String>> rolesPermissions = new HashMap<>();
     Set<String> permissions = new HashSet<>();
-    permissions.add("role1:view");
-    permissions.add("role1:update");
-    rolesPermissions.put("role1", permissions);
+    permissions.add("sys:role1:view");
+    permissions.add("sys:role1:update");
+    rolesPermissions.put("sys:role1", permissions);
     urp.put("name1", rolesPermissions);
     rolesPermissions = new HashMap<>();
     permissions = new HashSet<>();
-    permissions.add("role2:*");
-    rolesPermissions.put("role2", permissions);
+    permissions.add("sys:role2:*");
+    rolesPermissions.put("sys:role2", permissions);
     urp.put("name2", rolesPermissions);
+    rolesPermissions = new HashMap<>();
+    permissions = new HashSet<>();
+    permissions.add("sys:*:*");
+    rolesPermissions.put("sys:admin", permissions);
+    urp.put("name3", rolesPermissions);
 
     return urp.get(userName);
   }

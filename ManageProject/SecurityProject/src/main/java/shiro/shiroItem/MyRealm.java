@@ -8,21 +8,16 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
-import org.apache.shiro.crypto.SecureRandomNumberGenerator;
-import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
-import shiro.shiroApp.ShiroService;
+import shiro.shiroService.ShiroService;
 
 public class MyRealm extends AuthorizingRealm {
 
   private ShiroService ss;
-
-  private final String privateSalt = "HL";
 
   public MyRealm(ShiroService ss) {
     this.ss = ss;
@@ -51,8 +46,8 @@ public class MyRealm extends AuthorizingRealm {
     }
 
     SimpleAuthenticationInfo sai =
-        new SimpleAuthenticationInfo(username, cryptography(user.get(username)), getName());
-    sai.setCredentialsSalt(ByteSource.Util.bytes(privateSalt));
+        new SimpleAuthenticationInfo(username, user.get(username), getName());
+    sai.setCredentialsSalt(ByteSource.Util.bytes("44bab1b7e615547b3ead081f96edded0"));
     return sai;
   }
 
@@ -64,18 +59,5 @@ public class MyRealm extends AuthorizingRealm {
   @Override
   public String getName() {
     return "MyRealm";
-  }
-
-  private String cryptography(String password) {
-    SecureRandomNumberGenerator srng = new SecureRandomNumberGenerator();
-    srng.setSeed(privateSalt.getBytes());
-    System.out.println(srng);
-    return new SimpleHash("SHA-512", password, privateSalt, 3).toString();
-  }
-
-  @Override
-  public void setCredentialsMatcher(CredentialsMatcher credentialsMatcher) {
-    // TODO Auto-generated method stub
-    super.setCredentialsMatcher(credentialsMatcher);
   }
 }

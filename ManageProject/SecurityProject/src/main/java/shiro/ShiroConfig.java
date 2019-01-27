@@ -21,8 +21,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Import;
 import javaConfig.EhCacheConfig;
-import shiro.shiroApp.ShiroService;
 import shiro.shiroItem.MyRealm;
+import shiro.shiroItem.ShiroUtil;
+import shiro.shiroService.ShiroService;
 
 @Configuration
 @ComponentScan
@@ -49,8 +50,8 @@ public class ShiroConfig {
   @Bean
   public HashedCredentialsMatcher credential() {
     HashedCredentialsMatcher hcm = new HashedCredentialsMatcher();
-    hcm.setHashAlgorithmName("SHA-512");
-    hcm.setHashIterations(3);
+    hcm.setHashAlgorithmName(ShiroUtil.ALGORITHMNAME);
+    hcm.setHashIterations(ShiroUtil.HASHITERATIONS);
 
     return hcm;
   }
@@ -91,10 +92,7 @@ public class ShiroConfig {
     urlPermission.put("/testShiro/index", "anon");
     urlPermission.put("/testShiro/login", "anon");
     urlPermission.put("/testShiro/logout", "logout");
-    urlPermission.put("/testShiro/doInsert", "authc");
-    urlPermission.put("/testShiro/doDelete", "authc");
-    urlPermission.put("/testShiro/doUpdate", "authc");
-    urlPermission.put("/testShiro/doView", "authc");
+    urlPermission.put("/**", "authc");
     sffb.setLoginUrl("/testShiro/index");
     sffb.setFilterChainDefinitionMap(urlPermission);
 
