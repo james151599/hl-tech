@@ -9,13 +9,13 @@ public class ShiroUtil {
 
   public static final int HASHITERATIONS = 3;
 
-  private static final String privateSalt = "hl";
+  private static final String PRIVATESALT = "hl";
 
   private ShiroUtil() {}
 
   public static String generatePublicSalt() {
     SecureRandomNumberGenerator srng = new SecureRandomNumberGenerator();
-    srng.setSeed(privateSalt.getBytes());
+    srng.setSeed(PRIVATESALT.getBytes());
 
     return srng.nextBytes().toHex();
   }

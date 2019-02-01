@@ -17,6 +17,9 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 			<input type="text" name="password" value="123" />
 		</div>
 		<div>
+			<input type="checkbox" name="rememberMe" value="true" />Remember Me?
+		</div>
+		<div>
 			<button type="submit">登录</button>
 			<a href="${baseUrl}/testShiro/logout">退出</a>
 		</div>

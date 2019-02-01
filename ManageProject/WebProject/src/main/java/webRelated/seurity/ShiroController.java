@@ -24,20 +24,24 @@ public class ShiroController {
 
   @PostMapping("/login")
   @ResponseBody
-  public String login(@RequestParam String username, @RequestParam String password) {
+  public String login(@RequestParam String username, @RequestParam String password,
+      @RequestParam(defaultValue = "false") String rememberMe) {
     String result = "login success";
     Subject subject = SecurityUtils.getSubject();
-    UsernamePasswordToken upt = new UsernamePasswordToken(username, password);
-    try {
-      subject.login(upt);
-      Session session = subject.getSession();
-      System.out.println("getStartTimestamp: " + session.getStartTimestamp() + "getLastAccessTime: "
-          + session.getLastAccessTime());
-      // JavaSE应用需要自己定期调用session.touch();去更新最后访问时间
-      session.setAttribute("someKey", "someValue");
+    if (!subject.isAuthenticated()) {
+      UsernamePasswordToken upt = new UsernamePasswordToken(username, password);
+      upt.setRememberMe(Boolean.valueOf(rememberMe));
+      try {
+        subject.login(upt);
+        Session session = subject.getSession();
+        System.out.println("getStartTimestamp: " + session.getStartTimestamp()
+            + "getLastAccessTime: " + session.getLastAccessTime());
+        // JavaSE应用需要自己定期调用session.touch();去更新最后访问时间
+        session.setAttribute("someKey", "someValue");
 
-    } catch (AuthenticationException e) {
-      result = "login failure: " + e.getMessage();
+      } catch (AuthenticationException e) {
+        result = "login failure: " + e.getMessage();
+      }
     }
 
     return result;

@@ -45,10 +45,8 @@ public class MyRealm extends AuthorizingRealm {
       throw new UnknownAccountException("UnknownAccountException");
     }
 
-    SimpleAuthenticationInfo sai =
-        new SimpleAuthenticationInfo(username, user.get(username), getName());
-    sai.setCredentialsSalt(ByteSource.Util.bytes("44bab1b7e615547b3ead081f96edded0"));
-    return sai;
+    return new SimpleAuthenticationInfo(username, user.get(username),
+        ByteSource.Util.bytes("44bab1b7e615547b3ead081f96edded0"), getName());
   }
 
   @Override

@@ -5,16 +5,26 @@ import java.util.Map;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.crypto.AesCipherService;
+import org.apache.shiro.crypto.CipherService;
+import org.apache.shiro.mgt.RememberMeManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
+import org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler;
 import org.apache.shiro.session.mgt.SessionManager;
+import org.apache.shiro.session.mgt.SessionValidationScheduler;
+import org.apache.shiro.session.mgt.ValidatingSessionManager;
 import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
+import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.sonatype.plexus.components.cipher.Base64;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -30,10 +40,37 @@ import shiro.shiroService.ShiroService;
 @Import({EhCacheConfig.class})
 public class ShiroConfig {
 
+  private static final long SESSIONTIMEOUT = 60000L;
+
+  private static final int COOKIETIME = 60;
+
+  private static final int REMEMBERMETIME = 600;
+
+  private static final long SESSIONSCHEDULE = 1800000L;
+
   @Bean
-  public SecurityManager securityManager(Realm oneRealm, SessionManager sm, CacheManager cm) {
+  public ShiroFilterFactoryBean shiroFilter(SecurityManager sm) {
+    ShiroFilterFactoryBean sffb = new ShiroFilterFactoryBean();
+    sffb.setSecurityManager(sm);
+    Map<String, String> urlPermission = new HashMap<>();
+    urlPermission.put("/testShiro/index", "anon");
+    urlPermission.put("/testShiro/login", "anon");
+    urlPermission.put("/testShiro/logout", "logout");
+    urlPermission.put("/**", "user");
+    urlPermission.put("/testShiro/pay/**", "authc");
+    sffb.setLoginUrl("/testShiro/index");
+    sffb.setSuccessUrl("/testShiro/main");
+    sffb.setFilterChainDefinitionMap(urlPermission);
+
+    return sffb;
+  }
+
+  @Bean
+  public SecurityManager securityManager(Realm oneRealm, SessionManager sm, RememberMeManager rmm,
+      CacheManager cm) {
     DefaultWebSecurityManager dwsm = new DefaultWebSecurityManager(oneRealm);
     dwsm.setSessionManager(sm);
+    dwsm.setRememberMeManager(rmm);
     dwsm.setCacheManager(cm);
 
     return dwsm;
@@ -59,21 +96,38 @@ public class ShiroConfig {
   @Bean
   public SessionManager sessionManager() {
     DefaultWebSessionManager dwsm = new DefaultWebSessionManager();
-    dwsm.setGlobalSessionTimeout(600000);
+    dwsm.setGlobalSessionTimeout(SESSIONTIMEOUT);
+    dwsm.setDeleteInvalidSessions(true);
     SimpleCookie sc = new SimpleCookie();
-    sc.setName("shiroCookie");
+    sc.setName("shiroSessionId");
     // 设置 Cookie 的过期时间,秒为单位
-    sc.setMaxAge(360000);
-    // 客户端不会暴露给客户端脚本代码,有助于减少某些类型的跨站点脚本攻击
+    sc.setMaxAge(COOKIETIME);
+    // 不会暴露给客户端脚本代码,有助于减少某些类型的跨站点脚本攻击
     sc.setHttpOnly(true);
     dwsm.setSessionIdCookie(sc);
     dwsm.setSessionIdCookieEnabled(true);
 
     EnterpriseCacheSessionDAO ecsDao = new EnterpriseCacheSessionDAO();
     ecsDao.setActiveSessionsCacheName("shiro-activeSessionCache");
+    ecsDao.setSessionIdGenerator(new JavaUuidSessionIdGenerator());
     dwsm.setSessionDAO(ecsDao);
 
     return dwsm;
+  }
+
+  @Bean
+  public RememberMeManager rememberMeManager() {
+    CookieRememberMeManager crmm = new CookieRememberMeManager();
+    crmm.setCipherKey(Base64.encodeBase64("2AvVhdsgUs0FSA3SDFAdag==".getBytes()));
+    CipherService cs = new AesCipherService();
+    crmm.setCipherService(cs);
+    SimpleCookie sc = new SimpleCookie();
+    sc.setName("shiroRememberMe");
+    sc.setHttpOnly(true);
+    sc.setMaxAge(REMEMBERMETIME);
+    crmm.setCookie(sc);
+
+    return crmm;
   }
 
   @Bean
@@ -85,18 +139,14 @@ public class ShiroConfig {
   }
 
   @Bean
-  public ShiroFilterFactoryBean shiroFilter(SecurityManager sm) {
-    ShiroFilterFactoryBean sffb = new ShiroFilterFactoryBean();
-    sffb.setSecurityManager(sm);
-    Map<String, String> urlPermission = new HashMap<>();
-    urlPermission.put("/testShiro/index", "anon");
-    urlPermission.put("/testShiro/login", "anon");
-    urlPermission.put("/testShiro/logout", "logout");
-    urlPermission.put("/**", "authc");
-    sffb.setLoginUrl("/testShiro/index");
-    sffb.setFilterChainDefinitionMap(urlPermission);
+  public SessionValidationScheduler sessionValidationScheduler(
+      @Qualifier("sessionManager") SessionManager sm) {
+    ExecutorServiceSessionValidationScheduler essvs =
+        new ExecutorServiceSessionValidationScheduler();
+    essvs.setInterval(SESSIONSCHEDULE);
+    essvs.setSessionManager((ValidatingSessionManager) sm);
 
-    return sffb;
+    return essvs;
   }
 
   // @Bean
