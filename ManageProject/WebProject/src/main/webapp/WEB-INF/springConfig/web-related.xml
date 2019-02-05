@@ -11,7 +11,7 @@
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 	<context:annotation-config />
-	<mvc:resources mapping="/js/**" location="/js/"
+	<mvc:resources mapping="/static/**" location="/static/"
 		cache-period="31556926" />
 
 	<bean class="webRelated.javaConfig.WebConfig" />

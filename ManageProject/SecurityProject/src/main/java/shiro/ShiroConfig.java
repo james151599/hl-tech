@@ -53,13 +53,13 @@ public class ShiroConfig {
     ShiroFilterFactoryBean sffb = new ShiroFilterFactoryBean();
     sffb.setSecurityManager(sm);
     Map<String, String> urlPermission = new HashMap<>();
-    urlPermission.put("/testShiro/index", "anon");
-    urlPermission.put("/testShiro/login", "anon");
-    urlPermission.put("/testShiro/logout", "logout");
+    urlPermission.put("/user/index", "anon");
+    urlPermission.put("/user/login", "anon");
+    urlPermission.put("/user/logout", "logout");
     urlPermission.put("/**", "user");
-    urlPermission.put("/testShiro/pay/**", "authc");
-    sffb.setLoginUrl("/testShiro/index");
-    sffb.setSuccessUrl("/testShiro/main");
+    urlPermission.put("/user/pay/**", "authc");
+    sffb.setLoginUrl("/user/index");
+    sffb.setSuccessUrl("/user/main");
     sffb.setFilterChainDefinitionMap(urlPermission);
 
     return sffb;

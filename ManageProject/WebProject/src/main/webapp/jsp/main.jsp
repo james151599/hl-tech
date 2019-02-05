@@ -3,42 +3,27 @@
 <!DOCTYPE html
 PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<%@ include file="/head.jsp"%>
 <html>
 <head>
+<%@ include file="/head.jsp"%>
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="${baseUrl}/testShiro/login" method="post">
-		<div>
-			<input type="text" name="username" value="abc" />
-		</div>
-		<div>
-			<input type="text" name="password" value="123" />
-		</div>
-		<div>
-			<input type="checkbox" name="rememberMe" value="true" />Remember Me?
-		</div>
-		<div>
-			<button type="submit">登录</button>
-			<a href="${baseUrl}/testShiro/logout">退出</a>
-		</div>
-	</form>
 	<div>
 		<label>testView</label> <input type="button" name="testButton1"
-			value="/testShiro/doView" />
+			value="/user/doView" />
 	</div>
 	<div>
 		<label>testUpdate</label> <input type="button" name="testButton2"
-			value="/testShiro/doUpdate" />
+			value="/user/doUpdate" />
 	</div>
 	<div>
 		<label>testInsert</label> <input type="button" name="testButton3"
-			value="/testShiro/doInsert" />
+			value="/user/doInsert" />
 	</div>
 	<div>
 		<label>testDelete</label> <input type="button" name="testButton4"
-			value="/testShiro/doDelete" />
+			value="/user/doDelete" />
 	</div>
 
 	<script>

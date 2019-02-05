@@ -14,19 +14,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/testShiro")
-public class ShiroController {
+@RequestMapping("/user")
+public class UserController {
 
   @GetMapping("/index")
   public String index() {
-    return "shiroLogin";
+    if (SecurityUtils.getSubject().isRemembered()) {
+      return "main";
+    }
+    return "userLogin";
+  }
+
+  @GetMapping("/main")
+  public String main() {
+    return "main";
   }
 
   @PostMapping("/login")
-  @ResponseBody
   public String login(@RequestParam String username, @RequestParam String password,
       @RequestParam(defaultValue = "false") String rememberMe) {
-    String result = "login success";
+
     Subject subject = SecurityUtils.getSubject();
     if (!subject.isAuthenticated()) {
       UsernamePasswordToken upt = new UsernamePasswordToken(username, password);
@@ -40,11 +47,11 @@ public class ShiroController {
         session.setAttribute("someKey", "someValue");
 
       } catch (AuthenticationException e) {
-        result = "login failure: " + e.getMessage();
+        throw e;
       }
     }
 
-    return result;
+    return "main";
   }
 
   @GetMapping("/logout")
@@ -56,32 +63,32 @@ public class ShiroController {
 
   @GetMapping("/unauthorized")
   public String unauthorized() {
-    return "shiroUnauthorized";
+    return "unauthorized";
   }
 
-  @RequiresPermissions("role2:insert")
   @PostMapping("/doInsert")
+  @RequiresPermissions("role2:insert")
   @ResponseBody
   public String doInsert() {
     return "do insert";
   }
 
-  @RequiresPermissions("role2:delete")
   @PostMapping("/doDelete")
+  @RequiresPermissions("role2:delete")
   @ResponseBody
   public String doDelete() {
     return "do delete";
   }
 
-  @RequiresPermissions("role1:update")
   @PostMapping("/doUpdate")
+  @RequiresPermissions("role1:update")
   @ResponseBody
   public String doUpdate() {
     return "do update";
   }
 
-  @RequiresPermissions("role1:view")
   @GetMapping("/doView")
+  @RequiresPermissions("role1:view")
   @ResponseBody
   public String doView() {
     return "do view";
