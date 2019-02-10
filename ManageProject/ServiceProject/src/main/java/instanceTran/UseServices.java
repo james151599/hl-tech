@@ -40,7 +40,7 @@ public class UseServices {
 
   @Transactional(propagation = Propagation.REQUIRED)
   public void newTran() {
-    ed.insertExam("newTran", "新建事务", 90);
+    ed.insertExam("newTranException", "新建事务异常", 90);
     // 异常会导致外部事物回滚
     try {
       es.updateExamException(1, 77);

@@ -14,4 +14,9 @@ public class CommonBusiness {
     System.out.println("call exeMethodTest2");
     return "123";
   }
+
+  public int exeMethodTest3(int count) {
+    System.out.println("call exeMethodTest3");
+    return count;
+  }
 }

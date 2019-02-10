@@ -26,6 +26,7 @@ public class AOPTest {
   public void testAOP() {
     cb.exeMethodTest1("abc");
     cb.exeMethodTest2();
+    cb.exeMethodTest3(7);
     ib.methodOne();
     expectedEx.expect(RuntimeException.class);
     expectedEx.expectMessage("let afterFailedMethod execute");

@@ -18,7 +18,7 @@ public class UseThread {
       synchronized (this) {
         if (tickets.size() < 10) {
           t = new Ticket();
-          t.setIndex(tickets.size() + 1);
+          t.setNumber(tickets.size() + 1);
           t.setName(name);
           tickets.add(t);
           System.out
@@ -59,16 +59,17 @@ public class UseThread {
 
 
 class Ticket {
-  private int index;
+
+  private int number;
 
   private String name;
 
-  public int getIndex() {
-    return index;
+  public int getNumber() {
+    return number;
   }
 
-  public void setIndex(int index) {
-    this.index = index;
+  public void setNumber(int number) {
+    this.number = number;
   }
 
   public String getName() {
@@ -81,6 +82,6 @@ class Ticket {
 
   @Override
   public String toString() {
-    return this.index + "   " + this.name;
+    return this.number + "   " + this.name;
   }
 }

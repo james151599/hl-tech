@@ -41,6 +41,10 @@ public class AspectClass implements Ordered {
   @Pointcut("within(instanceAOP..*)")
   public void businessDefine3() {}
 
+  // can not replace "&&" to "and"
+  @Pointcut("execution(* instanceAOP.CommonBusiness.*(int)) && args(num)")
+  public void businessDefine4(int num) {}
+
   @Pointcut("businessDefine2() and businessDefine3()")
   public void businessAnd() {}
 
@@ -64,10 +68,10 @@ public class AspectClass implements Ordered {
 
     while (numAttempts < this.maxRetries) {
       try {
-        numAttempts++;
         retVal = pjp.proceed();
         break;
       } catch (Throwable e) {
+        numAttempts++;
         ta = e;
       }
     }
@@ -81,6 +85,11 @@ public class AspectClass implements Ordered {
   @Before("businessAnd() and args(str)")
   public void beforeMethod(String str) {
     System.out.println("weave beforeMethod: " + str);
+  }
+
+  @Before("businessDefine4(num)")
+  public void beforeMethod(int num) {
+    System.out.println("weave beforeMethod: " + num);
   }
 
   @AfterReturning(pointcut = "businessAnd() or businessDefine()", returning = "retVal")

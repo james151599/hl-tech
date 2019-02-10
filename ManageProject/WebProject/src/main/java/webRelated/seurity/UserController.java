@@ -67,28 +67,28 @@ public class UserController {
   }
 
   @PostMapping("/doInsert")
-  @RequiresPermissions("role2:insert")
+  @RequiresPermissions("sys:role2:insert")
   @ResponseBody
   public String doInsert() {
     return "do insert";
   }
 
   @PostMapping("/doDelete")
-  @RequiresPermissions("role2:delete")
+  @RequiresPermissions("sys:role2:delete")
   @ResponseBody
   public String doDelete() {
     return "do delete";
   }
 
   @PostMapping("/doUpdate")
-  @RequiresPermissions("role1:update")
+  @RequiresPermissions("sys:role1:update")
   @ResponseBody
   public String doUpdate() {
     return "do update";
   }
 
   @GetMapping("/doView")
-  @RequiresPermissions("role1:view")
+  @RequiresPermissions("sys:role1:view")
   @ResponseBody
   public String doView() {
     return "do view";
