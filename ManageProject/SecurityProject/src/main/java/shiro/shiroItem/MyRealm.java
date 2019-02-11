@@ -2,6 +2,7 @@ package shiro.shiroItem;
 
 import java.util.Map;
 import java.util.Set;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -21,6 +22,10 @@ public class MyRealm extends AuthorizingRealm {
 
   public MyRealm(ShiroService ss) {
     this.ss = ss;
+  }
+
+  public void clearAuthorizationCache() {
+    super.clearCachedAuthorizationInfo(SecurityUtils.getSubject().getPrincipals());
   }
 
   @Override

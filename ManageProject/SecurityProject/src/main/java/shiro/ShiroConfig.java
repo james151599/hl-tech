@@ -80,6 +80,7 @@ public class ShiroConfig {
   public Realm myRealm(ShiroService ss, HashedCredentialsMatcher hcm) {
     MyRealm mr = new MyRealm(ss);
     mr.setCredentialsMatcher(hcm);
+    mr.setCachingEnabled(true);
 
     return mr;
   }
