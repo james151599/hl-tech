@@ -6,23 +6,23 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 
 public class ShiroUtil {
 
-  public static final String ALGORITHMNAME = "SHA-512";
+  public static final String ALGORITHM_NAME = "SHA-512";
 
-  public static final int HASHITERATIONS = 3;
+  public static final int HASH_ITERATIONS = 3;
 
-  private static final String PRIVATESALT = "hl";
+  private static final String PRIVATE_SALT = "hl";
 
   private ShiroUtil() {}
 
   public static String generatePublicSalt() {
     SecureRandomNumberGenerator srng = new SecureRandomNumberGenerator();
-    srng.setSeed(PRIVATESALT.getBytes());
+    srng.setSeed(PRIVATE_SALT.getBytes());
 
     return srng.nextBytes().toHex();
   }
 
   public static String encryption(String content, String salt) {
-    return new SimpleHash(ALGORITHMNAME, content, salt, HASHITERATIONS).toString();
+    return new SimpleHash(ALGORITHM_NAME, content, salt, HASH_ITERATIONS).toString();
   }
 
   public static void setSessionValue(Object key, Object value) {
@@ -31,5 +31,9 @@ public class ShiroUtil {
 
   public static void getSessionValue(Object key) {
     SecurityUtils.getSubject().getSession().getAttribute(key);
+  }
+
+  public static String getSessionId() {
+    return (String) SecurityUtils.getSubject().getSession().getId();
   }
 }

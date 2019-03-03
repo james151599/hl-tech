@@ -20,7 +20,7 @@ public class AOPTest {
   private CommonBusiness cb;
 
   @Autowired
-  private IBusiness ib;
+  private Business ib;
 
   @Test
   public void testAOP() {

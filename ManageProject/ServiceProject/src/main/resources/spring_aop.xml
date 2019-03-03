@@ -4,7 +4,6 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:jee="http://www.springframework.org/schema/jee"
 	xsi:schemaLocation="
     http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -13,9 +12,7 @@
     http://www.springframework.org/schema/tx
     http://www.springframework.org/schema/tx/spring-tx.xsd
     http://www.springframework.org/schema/aop
-    http://www.springframework.org/schema/aop/spring-aop.xsd
-    http://www.springframework.org/schema/jee
-    http://www.springframework.org/schema/jee/spring-jee.xsd">
+    http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 	<import resource="classpath:spring_db.xml" />
 
@@ -26,11 +23,11 @@
 	<tx:advice id="txAdvice" transaction-manager="txManager">
 		<tx:attributes>
 			<tx:method name="get*" read-only="true" />
-			<tx:method name="insert*" propagation="REQUIRED"
+			<tx:method name="save*" propagation="REQUIRED"
 				isolation="DEFAULT" />
-			<tx:method name="delete*" propagation="NESTED"
+			<tx:method name="remove*" propagation="NESTED"
 				isolation="DEFAULT" />
-			<tx:method name="update*" propagation="REQUIRES_NEW"
+			<tx:method name="alter*" propagation="REQUIRES_NEW"
 				isolation="DEFAULT" />
 		</tx:attributes>
 	</tx:advice>

@@ -10,7 +10,11 @@
 		diskPersistent="false" memoryStoreEvictionPolicy="FIFO" />
 
 	<cache name="cacheObj" maxElementsInMemory="1000"
-		timeToIdleSeconds="10" timeToLiveSeconds="10" />
+		timeToIdleSeconds="600" timeToLiveSeconds="600" />
+
+	<cache name="verificationCode" maxElementsInMemory="1000"
+		timeToIdleSeconds="300" timeToLiveSeconds="300" />
+
 	<cache name="shiro-activeSessionCache"
 		maxElementsInMemory="10000" overflowToDisk="true" eternal="true"
 		timeToLiveSeconds="0" timeToIdleSeconds="0" diskPersistent="true"

@@ -1,6 +1,6 @@
 package instanceAOP;
 
-public interface IBusiness {
+public interface Business {
 
   void methodOne();
 

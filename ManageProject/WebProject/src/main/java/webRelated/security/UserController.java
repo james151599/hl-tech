@@ -1,4 +1,4 @@
-package webRelated.seurity;
+package webRelated.security;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import shiro.shiroItem.ShiroUtil;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/sys/user")
 public class UserController {
 
   @GetMapping("/index")

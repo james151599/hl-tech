@@ -3,7 +3,7 @@ package instanceAOP;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BusinessImpl implements IBusiness {
+public class BusinessImpl implements Business {
 
   @Override
   public void methodOne() {

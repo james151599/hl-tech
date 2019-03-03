@@ -8,7 +8,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import instanceAOP.CommonBusiness;
-import instanceAOP.IBusiness;
+import instanceAOP.Business;
 import instanceBean.ExampleBean;
 import instanceTran.Exam;
 import instanceTran.ExamService;
@@ -32,17 +32,17 @@ public class TTT {
 		CommonBusiness cb = ac.getBean(CommonBusiness.class);
 		cb.exeMethodTest1("abc");
 		cb.exeMethodTest2();
-		IBusiness bi = ac.getBean(IBusiness.class);
+		Business bi = ac.getBean(Business.class);
 		bi.methodOne();
 		bi.methodTwo();
 
 		ApplicationContext ac2 = new AnnotationConfigApplicationContext(TranConfig.class);
 		ExamService es = (ExamService) ac2.getBean("esi");
 		ExamService es2 = (ExamService) ac2.getBean("esi2");
-		es.insertExam("aaa", "语文", 80);
-		es2.insertExam("bbb", "语文", 90);
-		es.updateExam(1, 85);
-		es2.updateExam(2, 95);
+		es.saveExam("aaa", "语文", 80);
+		es2.saveExam("bbb", "语文", 90);
+		es.alterExam(1, 85);
+		es2.alterExam(2, 95);
 		int total = es.getExamCount();
 		System.out.println(total);
 		Exam em = es.getExam(1);

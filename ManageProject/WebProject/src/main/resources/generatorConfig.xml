@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC
+  "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<!-- 数据库驱动 -->
+	<properties resource="jdbc.properties" />
+	<!-- 指定数据连接驱动jar地址 -->
+	<classPathEntry location="${jdbc.driverPath}" />
+	<!-- defaultModelType="flat" 大数据字段，不分表 -->
+	<context id="MySql" targetRuntime="MyBatis3"
+		defaultModelType="flat">
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+
+		<!-- 取消注释及日期 -->
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+			<property name="suppressDate" value="true" />
+		</commentGenerator>
+
+		<!--数据库链接URL，用户名、密码 -->
+		<jdbcConnection driverClass="${jdbc.driverClassName}"
+			connectionURL="${jdbc.url}" userId="${jdbc.username}"
+			password="${jdbc.password}">
+		</jdbcConnection>
+
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<!-- 生成Entity的包名和位置 -->
+		<javaModelGenerator
+			targetPackage="middleTierRelated.entity"
+			targetProject="src/main/java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<!-- 生成映射XML文件的包名和位置 -->
+		<sqlMapGenerator targetPackage="mybatis_mappers"
+			targetProject="src/main/java">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+		<!-- 生成DAO的包名和位置 -->
+		<javaClientGenerator
+			targetPackage="middleTierRelated.dao" targetProject="src/main/java"
+			type="XMLMAPPER">
+			<property name="enableSubPackages" value="false" />
+		</javaClientGenerator>
+
+		<!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名 -->
+		<table tableName="sys_user" domainObjectName="SysUserPO"></table>
+		<table tableName="sys_role" domainObjectName="SysRolePO"></table>
+		<table tableName="sys_menu" domainObjectName="SysMenuPO"></table>
+	</context>
+</generatorConfiguration>

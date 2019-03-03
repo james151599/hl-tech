@@ -10,9 +10,9 @@ public interface ExamDao {
 
   int updateExam(long id, int score);
 
-  int getExamCount();
+  int selectExamCount();
 
-  Exam getExam(long id);
+  Exam selectExam(long id);
 
-  List<Exam> getExams(String course);
+  List<Exam> selectExams(String course);
 }

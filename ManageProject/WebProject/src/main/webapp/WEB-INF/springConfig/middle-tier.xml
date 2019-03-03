@@ -9,5 +9,5 @@
 
 	<context:annotation-config />
 
-	<bean class="shiro.ShiroConfig" />
+	<bean class="middleTierRelated.javaConfig.TierConfig" />
 </beans>

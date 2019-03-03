@@ -40,13 +40,13 @@ import shiro.shiroService.ShiroService;
 @Import({EhCacheConfig.class})
 public class ShiroConfig {
 
-  private static final long SESSIONTIMEOUT = 60000L;
+  private static final long SESSION_TIMEOUT = 60000L;
 
-  private static final int COOKIETIME = 60;
+  private static final int COOKIE_TIME = 60;
 
-  private static final int REMEMBERMETIME = 600;
+  private static final int REMEMBERME_TIME = 600;
 
-  private static final long SESSIONSCHEDULE = 1800000L;
+  private static final long SESSION_SCHEDULE = 1800000L;
 
   @Bean
   public ShiroFilterFactoryBean shiroFilter(SecurityManager sm) {
@@ -60,6 +60,7 @@ public class ShiroConfig {
     urlPermission.put("/user/pay/**", "authc");
     sffb.setLoginUrl("/user/index");
     sffb.setSuccessUrl("/user/main");
+    sffb.setUnauthorizedUrl("/user/unauthorized");
     sffb.setFilterChainDefinitionMap(urlPermission);
 
     return sffb;
@@ -80,7 +81,9 @@ public class ShiroConfig {
   public Realm myRealm(ShiroService ss, HashedCredentialsMatcher hcm) {
     MyRealm mr = new MyRealm(ss);
     mr.setCredentialsMatcher(hcm);
-    mr.setCachingEnabled(true);
+    // mr.setCachingEnabled(true); 默认是true
+    // mr.setAuthorizationCachingEnabled(true); 默认是true
+    // mr.setAuthenticationCachingEnabled(false); 默认是false
 
     return mr;
   }
@@ -88,8 +91,8 @@ public class ShiroConfig {
   @Bean
   public HashedCredentialsMatcher credential() {
     HashedCredentialsMatcher hcm = new HashedCredentialsMatcher();
-    hcm.setHashAlgorithmName(ShiroUtil.ALGORITHMNAME);
-    hcm.setHashIterations(ShiroUtil.HASHITERATIONS);
+    hcm.setHashAlgorithmName(ShiroUtil.ALGORITHM_NAME);
+    hcm.setHashIterations(ShiroUtil.HASH_ITERATIONS);
 
     return hcm;
   }
@@ -97,12 +100,12 @@ public class ShiroConfig {
   @Bean
   public SessionManager sessionManager() {
     DefaultWebSessionManager dwsm = new DefaultWebSessionManager();
-    dwsm.setGlobalSessionTimeout(SESSIONTIMEOUT);
+    dwsm.setGlobalSessionTimeout(SESSION_TIMEOUT);
     dwsm.setDeleteInvalidSessions(true);
     SimpleCookie sc = new SimpleCookie();
     sc.setName("shiroSessionId");
     // 设置 Cookie 的过期时间,秒为单位
-    sc.setMaxAge(COOKIETIME);
+    sc.setMaxAge(COOKIE_TIME);
     // 不会暴露给客户端脚本代码,有助于减少某些类型的跨站点脚本攻击
     sc.setHttpOnly(true);
     dwsm.setSessionIdCookie(sc);
@@ -125,7 +128,7 @@ public class ShiroConfig {
     SimpleCookie sc = new SimpleCookie();
     sc.setName("shiroRememberMe");
     sc.setHttpOnly(true);
-    sc.setMaxAge(REMEMBERMETIME);
+    sc.setMaxAge(REMEMBERME_TIME);
     crmm.setCookie(sc);
 
     return crmm;
@@ -144,7 +147,7 @@ public class ShiroConfig {
       @Qualifier("sessionManager") SessionManager sm) {
     ExecutorServiceSessionValidationScheduler essvs =
         new ExecutorServiceSessionValidationScheduler();
-    essvs.setInterval(SESSIONSCHEDULE);
+    essvs.setInterval(SESSION_SCHEDULE);
     essvs.setSessionManager((ValidatingSessionManager) sm);
 
     return essvs;

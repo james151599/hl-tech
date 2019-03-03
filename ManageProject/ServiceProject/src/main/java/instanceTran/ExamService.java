@@ -4,17 +4,17 @@ import java.util.List;
 
 public interface ExamService {
 
-  void insertExam(String name, String course, int score);
+  void saveExam(String name, String course, int score);
 
-  void insertExamException(String name, String course, int score);
+  void saveExamException(String name, String course, int score);
 
-  void deleteExam(long id);
+  void removeExam(long id);
 
-  void deleteExamException(long id);
+  void removeExamException(long id);
 
-  void updateExam(long id, int score);
+  void alterExam(long id, int score);
 
-  void updateExamException(long id, int score);
+  void alterExamException(long id, int score);
 
   int getExamCount();
 

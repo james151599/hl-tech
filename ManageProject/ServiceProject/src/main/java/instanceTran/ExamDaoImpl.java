@@ -38,18 +38,18 @@ public class ExamDaoImpl implements ExamDao {
   }
 
   @Override
-  public int getExamCount() {
+  public int selectExamCount() {
     return eu.getExamRowCount();
   }
 
   @Override
-  public Exam getExam(long id) {
+  public Exam selectExam(long id) {
     System.out.println("测试缓存");
     return eu.getExamById(id);
   }
 
   @Override
-  public List<Exam> getExams(String course) {
+  public List<Exam> selectExams(String course) {
     return eu.getExamsByCourse(course);
   }
 }

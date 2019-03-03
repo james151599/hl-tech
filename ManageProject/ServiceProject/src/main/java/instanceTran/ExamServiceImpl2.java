@@ -20,37 +20,37 @@ public class ExamServiceImpl2 implements ExamService {
   }
 
   @Override
-  public void insertExam(String name, String course, int score) {
+  public void saveExam(String name, String course, int score) {
     int num = ed.insertExam(name, course, score);
     System.out.println("insert row:" + num);
   }
 
   @Override
-  public void deleteExam(long id) {
+  public void removeExam(long id) {
     int num = ed.deleteExam(id);
     System.out.println("delete row:" + num);
   }
 
   @Override
-  public void updateExam(long id, int score) {
+  public void alterExam(long id, int score) {
     int num = ed.updateExam(id, score);
     System.out.println("update row:" + num);
   }
 
   @Override
-  public void insertExamException(String name, String course, int score) {
+  public void saveExamException(String name, String course, int score) {
     ed.insertExam(name, course, score);
     throw new RuntimeException("insert exception");
   }
 
   @Override
-  public void deleteExamException(long id) {
+  public void removeExamException(long id) {
     ed.deleteExam(id);
     throw new RuntimeException("delete exception");
   }
 
   @Override
-  public void updateExamException(long id, int score) {
+  public void alterExamException(long id, int score) {
     ed.updateExam(id, score);
     throw new RuntimeException("update exception");
   }
@@ -59,20 +59,20 @@ public class ExamServiceImpl2 implements ExamService {
   @Transactional(readOnly = true)
   @Cacheable("cacheObj")
   public int getExamCount() {
-    return ed.getExamCount();
+    return ed.selectExamCount();
   }
 
   @Override
   @Transactional(readOnly = true)
   @Cacheable("cacheObj")
   public Exam getExam(long id) {
-    return ed.getExam(id);
+    return ed.selectExam(id);
   }
 
   @Override
   @Transactional(readOnly = true)
   @Cacheable("cacheObj")
   public List<Exam> getExams(String course) {
-    return ed.getExams(course);
+    return ed.selectExams(course);
   }
 }
