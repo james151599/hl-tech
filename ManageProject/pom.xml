@@ -24,6 +24,7 @@
 		<module>SecurityProject</module>
 		<module>ServiceProject</module>
 		<module>WebProject</module>
+		<module>MybatisGenerator</module>
 	</modules>
 
 	<build>
@@ -51,6 +52,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>

@@ -14,9 +14,9 @@ public class ShiroUtil {
 
   private ShiroUtil() {}
 
-  public static String generatePublicSalt() {
+  public static String generatePublicSalt(String account) {
     SecureRandomNumberGenerator srng = new SecureRandomNumberGenerator();
-    srng.setSeed(PRIVATE_SALT.getBytes());
+    srng.setSeed((PRIVATE_SALT + account).getBytes());
 
     return srng.nextBytes().toHex();
   }

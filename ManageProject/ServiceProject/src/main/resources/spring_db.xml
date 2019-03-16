@@ -11,8 +11,9 @@
     http://www.springframework.org/schema/jee
     http://www.springframework.org/schema/jee/spring-jee.xsd">
 
+	<!-- 路径要加上classpath: -->
 	<context:property-placeholder
-		location="jdbc.properties,log4j.properties" />
+		location="classpath:jdbc.properties,classpath:log4j.properties" />
 
 	<bean id="dataSource"
 		class="org.apache.commons.dbcp2.BasicDataSource"

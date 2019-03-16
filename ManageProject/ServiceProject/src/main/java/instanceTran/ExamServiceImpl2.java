@@ -9,7 +9,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service("esi2")
-@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT,
+    rollbackFor = Exception.class)
 public class ExamServiceImpl2 implements ExamService {
 
   private ExamDao ed;

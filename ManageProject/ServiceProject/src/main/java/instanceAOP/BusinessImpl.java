@@ -6,13 +6,13 @@ import org.springframework.stereotype.Component;
 public class BusinessImpl implements Business {
 
   @Override
-  public void methodOne() {
-    System.out.println("call methodOne");
+  public void businessOne() {
+    System.out.println("call businessOne");
   }
 
   @Override
-  public void methodTwo() {
-    System.out.println("call methodTwo");
-    throw new RuntimeException("methodTwo throws RuntimeException");
+  public void businessTwo() {
+    System.out.println("call businessTwo");
+    throw new RuntimeException("businessTwo throws RuntimeException");
   }
 }

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import shiro.shiroItem.ShiroUtil;
 
 @Controller
-@RequestMapping("/sys/user")
+@RequestMapping("/user")
 public class UserController {
 
   @GetMapping("/index")

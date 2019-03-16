@@ -24,12 +24,12 @@ public class AOPTest {
 
   @Test
   public void testAOP() {
-    cb.exeMethodTest1("abc");
-    cb.exeMethodTest2();
-    cb.exeMethodTest3(7);
-    ib.methodOne();
+    cb.commonBusinessOne("abc");
+    cb.commonBusinessTwo();
+    cb.commonBusinessThree(7);
+    ib.businessOne();
     expectedEx.expect(RuntimeException.class);
     expectedEx.expectMessage("let afterFailedMethod execute");
-    ib.methodTwo();
+    ib.businessTwo();
   }
 }

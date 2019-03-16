@@ -31,11 +31,16 @@
 		</javaTypeResolver>
 
 		<!-- 生成Entity的包名和位置 -->
-		<javaModelGenerator
-			targetPackage="middleTierRelated.entity"
+		<javaModelGenerator targetPackage="entity"
 			targetProject="src/main/java">
-			<property name="enableSubPackages" value="true" />
+			<!-- 是否允许子包，即targetPackage.schemaName.tableName -->
+			<property name="enableSubPackages" value="false" />
+			<!-- 是否对model添加 构造函数 -->
+			<property name="constructorBased" value="true" />
+			<!-- 是否对类CHAR类型的列的数据进行trim操作 -->
 			<property name="trimStrings" value="true" />
+			<!-- 建立的Model对象是否 不可改变 即生成的Model对象不会有 setter方法，只有构造方法 -->
+			<property name="immutable" value="false" />
 		</javaModelGenerator>
 
 		<!-- 生成映射XML文件的包名和位置 -->
@@ -45,15 +50,16 @@
 		</sqlMapGenerator>
 
 		<!-- 生成DAO的包名和位置 -->
-		<javaClientGenerator
-			targetPackage="middleTierRelated.dao" targetProject="src/main/java"
-			type="XMLMAPPER">
+		<javaClientGenerator targetPackage="dao"
+			targetProject="src/main/java" type="XMLMAPPER">
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
 
 		<!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名 -->
-		<table tableName="sys_user" domainObjectName="SysUserPO"></table>
-		<table tableName="sys_role" domainObjectName="SysRolePO"></table>
-		<table tableName="sys_menu" domainObjectName="SysMenuPO"></table>
+		<table tableName="sys_user" domainObjectName="UserPO"></table>
+		<table tableName="sys_role" domainObjectName="RolePO"></table>
+		<table tableName="sys_menu" domainObjectName="MenuPO"></table>
+		<table tableName="sys_user_role" domainObjectName="UserRolePO"></table>
+		<table tableName="sys_role_menu" domainObjectName="RoleMenuPO"></table>
 	</context>
 </generatorConfiguration>

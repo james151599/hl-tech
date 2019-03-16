@@ -5,18 +5,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class CommonBusiness {
 
-  public String exeMethodTest1(String arg) {
-    System.out.println("call exeMethodTest1");
+  public String commonBusinessOne(String arg) {
+    System.out.println("call commonBusinessOne");
     return arg;
   }
 
-  public String exeMethodTest2() {
-    System.out.println("call exeMethodTest2");
+  public String commonBusinessTwo() {
+    System.out.println("call commonBusinessTwo");
     return "123";
   }
 
-  public int exeMethodTest3(int count) {
-    System.out.println("call exeMethodTest3");
+  public int commonBusinessThree(int count) {
+    System.out.println("call commonBusinessThree");
     return count;
   }
 }

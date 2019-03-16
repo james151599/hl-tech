@@ -24,11 +24,11 @@
 		<tx:attributes>
 			<tx:method name="get*" read-only="true" />
 			<tx:method name="save*" propagation="REQUIRED"
-				isolation="DEFAULT" />
+				isolation="DEFAULT" rollback-for="Exception" />
 			<tx:method name="remove*" propagation="NESTED"
-				isolation="DEFAULT" />
+				isolation="DEFAULT" rollback-for="Exception" />
 			<tx:method name="alter*" propagation="REQUIRES_NEW"
-				isolation="DEFAULT" />
+				isolation="DEFAULT" rollback-for="Exception" />
 		</tx:attributes>
 	</tx:advice>
 

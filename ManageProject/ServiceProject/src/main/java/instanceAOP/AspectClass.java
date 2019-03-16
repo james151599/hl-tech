@@ -32,36 +32,42 @@ public class AspectClass implements Ordered {
     this.order = order;
   }
 
-  @Pointcut("execution(public * instanceAOP.IBusiness.*(..))")
-  public void businessDefine() {}
+  @Pointcut("execution(public * instanceAOP.Business.*(..))")
+  public void businessDefine1() {}
 
-  @Pointcut("execution(String instanceAOP..*.exeMethod*(..))")
-  public void businessDefine2() {}
+  @Pointcut("execution(String instanceAOP..*.common*(..))")
+  public void commonDefine1() {}
 
   @Pointcut("within(instanceAOP..*)")
-  public void businessDefine3() {}
+  public void allDefine() {}
 
   // can not replace "&&" to "and"
   @Pointcut("execution(* instanceAOP.CommonBusiness.*(int)) && args(num)")
-  public void businessDefine4(int num) {}
+  public void commonDefine2(int num) {}
 
-  @Pointcut("businessDefine2() and businessDefine3()")
-  public void businessAnd() {}
+  @Pointcut("businessDefine1() and allDefine()")
+  public void businessDefine2() {}
 
-  @After("businessDefine()")
+  @After("businessDefine1()")
   public void afterMethod() {
     System.out.println("weave afterMethod");
   }
 
-  @AfterThrowing(pointcut = "businessDefine()", throwing = "ex")
+  @AfterReturning(pointcut = "businessDefine2() or commonDefine1()", returning = "retVal")
+  public void afterSuccessMethod(Object retVal) {
+    System.out.println("weave afterSuccessMethod: " + retVal);
+  }
+
+  @AfterThrowing(pointcut = "businessDefine1()", throwing = "ex")
   public void afterFailedMethod(RuntimeException ex) {
     System.out.println("weave afterFailedMethod: " + ex.getMessage());
   }
 
   // a simple caching aspect could return a value from a cache
   // if it has one and invoke proceed() if it does not
-  @Around("businessDefine()")
+  @Around("businessDefine1()")
   public Object aroundMethod(ProceedingJoinPoint pjp) {
+    System.out.println("weave aroundMethod");
     int numAttempts = 0;
     Object retVal = null;
     Throwable ta = null;
@@ -82,18 +88,13 @@ public class AspectClass implements Ordered {
     return retVal;
   }
 
-  @Before("businessAnd() and args(str)")
+  @Before("commonDefine1() && args(str)")
   public void beforeMethod(String str) {
     System.out.println("weave beforeMethod: " + str);
   }
 
-  @Before("businessDefine4(num)")
+  @Before("commonDefine2(num)")
   public void beforeMethod(int num) {
     System.out.println("weave beforeMethod: " + num);
-  }
-
-  @AfterReturning(pointcut = "businessAnd() or businessDefine()", returning = "retVal")
-  public void afterSuccessMethod(Object retVal) {
-    System.out.println("weave afterSuccessMethod: " + retVal);
   }
 }

@@ -2,7 +2,7 @@ package instanceAOP;
 
 public interface Business {
 
-  void methodOne();
+  void businessOne();
 
-  void methodTwo();
+  void businessTwo();
 }

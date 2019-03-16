@@ -62,3 +62,5 @@ Maven -> Update Project...
 https://github.com/google/styleguide
 
 XML文件偶尔报错，右键菜单点击Validate
+
+https://www.mvnjar.com/org.apache.maven.plugins/list.html
