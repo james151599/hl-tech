@@ -82,6 +82,6 @@ class Ticket {
 
   @Override
   public String toString() {
-    return this.number + "   " + this.name;
+    return this.number + "->" + this.name;
   }
 }

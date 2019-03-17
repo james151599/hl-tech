@@ -1,4 +1,4 @@
-package webRelated.security;
+package webRelated.controller;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;

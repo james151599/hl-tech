@@ -1,4 +1,4 @@
-package middleTierRelated.mybatis;
+package middleTierRelated.javaConfig;
 
 import java.io.IOException;
 import javax.sql.DataSource;
@@ -37,7 +37,7 @@ public class MybatisConfig {
   public MapperScannerConfigurer mapperScannerConfigurer() {
     MapperScannerConfigurer msc = new MapperScannerConfigurer();
     msc.setSqlSessionFactoryBeanName("sqlSessionFactory");
-    msc.setBasePackage("middleTierRelated.mybatis.mappers");
+    msc.setBasePackage("middleTierRelated.mapper");
 
     return msc;
   }

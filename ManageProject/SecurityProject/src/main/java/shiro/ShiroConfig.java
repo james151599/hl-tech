@@ -106,10 +106,9 @@ public class ShiroConfig {
     sc.setName("shiroSessionId");
     // 设置 Cookie 的过期时间,秒为单位
     sc.setMaxAge(COOKIE_TIME);
-    // 不会暴露给客户端脚本代码,有助于减少某些类型的跨站点脚本攻击
-    sc.setHttpOnly(true);
+    // sc.setHttpOnly(true); 不会暴露给客户端脚本代码,有助于减少某些类型的跨站点脚本攻击
+    // dwsm.setSessionIdCookieEnabled(true); 默认是true
     dwsm.setSessionIdCookie(sc);
-    dwsm.setSessionIdCookieEnabled(true);
 
     EnterpriseCacheSessionDAO ecsDao = new EnterpriseCacheSessionDAO();
     ecsDao.setActiveSessionsCacheName("shiro-activeSessionCache");
@@ -127,7 +126,6 @@ public class ShiroConfig {
     crmm.setCipherService(cs);
     SimpleCookie sc = new SimpleCookie();
     sc.setName("shiroRememberMe");
-    sc.setHttpOnly(true);
     sc.setMaxAge(REMEMBERME_TIME);
     crmm.setCookie(sc);
 
@@ -162,12 +160,12 @@ public class ShiroConfig {
   // }
 
   @Bean
-  public LifecycleBeanPostProcessor shiroProcessor() {
+  public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
     return new LifecycleBeanPostProcessor();
   }
 
   @Bean
-  @DependsOn("shiroProcessor")
+  @DependsOn("lifecycleBeanPostProcessor")
   public AuthorizationAttributeSourceAdvisor shiroAdvisor(SecurityManager sm) {
     AuthorizationAttributeSourceAdvisor aasa = new AuthorizationAttributeSourceAdvisor();
     aasa.setSecurityManager(sm);
