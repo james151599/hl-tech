@@ -15,7 +15,7 @@ public interface UserDao {
 
   int insert(UserPO user);
 
-  int update(UserPO user);
+  int updateById(UserPO user);
 
   int deleteById(@Param("id") String id);
 }
