@@ -32,7 +32,7 @@ public class AspectClass implements Ordered {
     this.order = order;
   }
 
-  @Pointcut("execution(public * instanceAOP.Business.*(..))")
+  @Pointcut("execution(public * instanceAOP.BaseBusiness.*(..))")
   public void businessDefine() {}
 
   @Pointcut("execution(String instanceAOP..*.common*(..))")

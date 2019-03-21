@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="middleTierRelated.mapper.MenuDao">
+
+	<sql id="menuColumns">
+		id, menu_name, parent_id, menu_type, menu_href, permission,
+		status
+	</sql>
+
+	<select id="selectAll" resultType="middleTierRelated.vo.MenuVO">
+		select
+		<include refid="menuColumns" />
+		from sys_menu
+	</select>
+
+	<select id="selectById" resultType="middleTierRelated.vo.MenuVO">
+		select
+		<include refid="menuColumns" />
+		from sys_menu where id = #{id}
+	</select>
+
+	<insert id="insert"
+		parameterType="middleTierRelated.entity.MenuPO">
+		insert into sys_menu (id, role_name, role_sort,
+		status)
+		values (#{id,jdbcType=BIGINT}, #{roleName,jdbcType=VARCHAR},
+		#{roleSort,jdbcType=INTEGER},
+		#{status,jdbcType=CHAR})
+	</insert>
+
+	<update id="updateById"
+		parameterType="middleTierRelated.entity.MenuPO">
+		update sys_menu
+		<set>
+			<if test="menuName != null">
+				menu_name = #{menuName,jdbcType=VARCHAR},
+			</if>
+			<if test="parentId != null">
+				parent_id = #{parentId,jdbcType=BIGINT},
+			</if>
+			<if test="menuSort != null">
+				menu_sort = #{menuSort,jdbcType=INTEGER},
+			</if>
+			<if test="menuType != null">
+				menu_type = #{menuType,jdbcType=CHAR},
+			</if>
+			<if test="menuHref != null">
+				menu_href = #{menuHref,jdbcType=VARCHAR},
+			</if>
+			<if test="permission != null">
+				permission = #{permission,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=CHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<delete id="deleteById">
+		delete from sys_role where id = #{id}
+	</delete>
+</mapper>

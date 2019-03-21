@@ -1,8 +1,5 @@
 package instanceAOP;
 
-public interface Business {
+public interface Business extends BaseBusiness {
 
-  void businessOne();
-
-  void businessTwo();
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="middleTierRelated.dao.UserDao">
+<mapper namespace="middleTierRelated.mapper.UserDao">
 
 	<sql id="userColumns">
-		id, login_code, user_name
+		id, login_code, user_name, email, status
 	</sql>
 
 	<select id="selectAll" resultType="middleTierRelated.vo.UserVO">
@@ -15,7 +15,7 @@
 	<select id="selectById" resultType="middleTierRelated.vo.UserVO">
 		select
 		<include refid="userColumns" />
-		from sys_user where login_code=#{id}
+		from sys_user where id=#{id}
 	</select>
 
 	<select id="selectByLoginCode"
@@ -25,9 +25,11 @@
 		from sys_user where login_code=#{loginCode}
 	</select>
 
-	<insert id="insert" parameterType="entity.UserPO">
+	<insert id="insert"
+		parameterType="middleTierRelated.entity.UserPO">
 		insert into sys_user (id,
-		login_code, user_name, password,
+		login_code, user_name,
+		password,
 		password_salt, email, status)
 		values
 		(#{id,jdbcType=BIGINT},
@@ -39,7 +41,8 @@
 		#{status,jdbcType=CHAR})
 	</insert>
 
-	<update id="updateById">
+	<update id="updateById"
+		parameterType="middleTierRelated.entity.RolePO">
 		update sys_user
 		<set>
 			<if test="loginCode != null">

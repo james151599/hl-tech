@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="middleTierRelated.mapper.RoleDao">
+
+	<sql id="roleColumns">
+		id, role_name, status
+	</sql>
+
+	<select id="selectAll" resultType="middleTierRelated.vo.RoleVO">
+		select
+		<include refid="roleColumns" />
+		from sys_role
+	</select>
+
+	<select id="selectById" resultType="middleTierRelated.vo.RoleVO">
+		select
+		<include refid="roleColumns" />
+		from sys_role where id = #{id}
+	</select>
+
+	<insert id="insert"
+		parameterType="middleTierRelated.entity.RolePO">
+		insert into sys_role (id, role_name, role_sort,
+		status)
+		values (#{id,jdbcType=BIGINT}, #{roleName,jdbcType=VARCHAR},
+		#{roleSort,jdbcType=INTEGER},
+		#{status,jdbcType=CHAR})
+	</insert>
+
+	<update id="updateById"
+		parameterType="middleTierRelated.entity.RolePO">
+		update sys_role
+		<set>
+			<if test="roleName != null">
+				role_name = #{roleName,jdbcType=VARCHAR},
+			</if>
+			<if test="roleSort != null">
+				role_sort = #{roleSort,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=CHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<delete id="deleteById">
+		delete from sys_role where id = #{id}
+	</delete>
+</mapper>
