@@ -7,7 +7,7 @@ import middleTierRelated.mapper.RoleDao;
 import middleTierRelated.service.RoleService;
 import middleTierRelated.vo.RoleVO;
 
-public class RoleServiceImpl implements RoleService {
+public class RoleServiceImpl extends BaseServiceImpl<RolePO, RoleDao> implements RoleService {
 
   @Autowired
   private RoleDao roleDao;

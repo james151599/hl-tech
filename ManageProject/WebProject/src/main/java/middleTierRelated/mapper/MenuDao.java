@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import middleTierRelated.entity.MenuPO;
 import middleTierRelated.vo.MenuVO;
 
-public interface MenuDao {
+public interface MenuDao extends BaseDao<MenuPO> {
 
   List<MenuVO> selectAll();
 

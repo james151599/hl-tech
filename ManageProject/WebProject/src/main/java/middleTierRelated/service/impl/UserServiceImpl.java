@@ -7,7 +7,7 @@ import middleTierRelated.mapper.UserDao;
 import middleTierRelated.service.UserService;
 import middleTierRelated.vo.UserVO;
 
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends BaseServiceImpl<UserPO, UserDao> implements UserService {
 
   @Autowired
   private UserDao userDao;

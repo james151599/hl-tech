@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import middleTierRelated.entity.RolePO;
 import middleTierRelated.vo.RoleVO;
 
-public interface RoleService {
+public interface RoleService extends BaseService<RolePO> {
 
   List<RoleVO> getAll();
 

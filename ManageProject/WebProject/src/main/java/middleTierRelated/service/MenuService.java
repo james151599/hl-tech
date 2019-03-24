@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import middleTierRelated.entity.MenuPO;
 import middleTierRelated.vo.MenuVO;
 
-public interface MenuService {
+public interface MenuService extends BaseService<MenuPO> {
 
   List<MenuVO> getAll();
 

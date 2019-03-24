@@ -7,7 +7,7 @@ import middleTierRelated.mapper.MenuDao;
 import middleTierRelated.service.MenuService;
 import middleTierRelated.vo.MenuVO;
 
-public class MenuServiceImpl implements MenuService {
+public class MenuServiceImpl extends BaseServiceImpl<MenuPO, MenuDao> implements MenuService {
 
   @Autowired
   private MenuDao menuDao;

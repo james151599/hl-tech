@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import middleTierRelated.entity.RolePO;
 import middleTierRelated.vo.RoleVO;
 
-public interface RoleDao {
+public interface RoleDao extends BaseDao<RolePO> {
 
   List<RoleVO> selectAll();
 

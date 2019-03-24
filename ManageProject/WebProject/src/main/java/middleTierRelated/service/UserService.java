@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import middleTierRelated.entity.UserPO;
 import middleTierRelated.vo.UserVO;
 
-public interface UserService {
+public interface UserService extends BaseService<UserPO> {
 
   List<UserVO> getAll();
 

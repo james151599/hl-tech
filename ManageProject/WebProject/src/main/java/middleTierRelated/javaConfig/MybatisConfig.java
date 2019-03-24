@@ -30,7 +30,7 @@ public class MybatisConfig {
 
   @Bean
   public SqlSessionTemplate sqlSession(SqlSessionFactory sqlSessionFactory) {
-    return new SqlSessionTemplate(sqlSessionFactory, ExecutorType.BATCH);
+    return new SqlSessionTemplate(sqlSessionFactory, ExecutorType.SIMPLE);
   }
 
   @Bean

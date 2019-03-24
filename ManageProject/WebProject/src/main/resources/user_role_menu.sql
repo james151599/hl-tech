@@ -6,6 +6,8 @@ CREATE TABLE `sys_user` (
   `password_salt` varchar(45) NOT NULL,
   `email` varchar(45) DEFAULT NULL,
   `status` char(1) NOT NULL DEFAULT '1',
+  `create_date` datetime DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login_code_UNIQUE` (`login_code`)
 );
@@ -13,6 +15,8 @@ CREATE TABLE `sys_user` (
 CREATE TABLE `sys_user_role` (
   `user_id` bigint(20) NOT NULL,
   `role_id` bigint(20) NOT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
   PRIMARY KEY (`user_id`,`role_id`)
 );
 
@@ -21,6 +25,8 @@ CREATE TABLE `sys_role` (
   `role_name` varchar(45) NOT NULL,
   `role_sort` int(11) DEFAULT NULL,
   `status` char(1) NOT NULL DEFAULT '1',
+  `create_date` datetime DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `role_name_UNIQUE` (`role_name`)
 );
@@ -28,6 +34,8 @@ CREATE TABLE `sys_role` (
 CREATE TABLE `sys_role_menu` (
   `role_id` bigint(20) NOT NULL,
   `menu_id` bigint(20) NOT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
   PRIMARY KEY (`role_id`,`menu_id`)
 );
 
@@ -40,6 +48,8 @@ CREATE TABLE `sys_menu` (
   `menu_href` varchar(45) DEFAULT NULL,
   `permission` varchar(45) DEFAULT NULL,
   `status` char(1) NOT NULL DEFAULT '1',
+  `create_date` datetime DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `menu_name_UNIQUE` (`menu_name`)
 );

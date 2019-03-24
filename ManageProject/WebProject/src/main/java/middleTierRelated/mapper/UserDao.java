@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import middleTierRelated.entity.UserPO;
 import middleTierRelated.vo.UserVO;
 
-public interface UserDao {
+public interface UserDao extends BaseDao<UserPO> {
 
   List<UserVO> selectAll();
 
