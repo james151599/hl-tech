@@ -1,0 +1,11 @@
+# 顺序执行过滤
+shiro:
+  filter:
+    urls:
+      /user/login: anon
+      /user/doLogin: anon
+      /user/logout: logout
+# 需登录后访问的url
+      /pay/**: authc
+# 过滤器允许记住我访问的url
+      /**: user

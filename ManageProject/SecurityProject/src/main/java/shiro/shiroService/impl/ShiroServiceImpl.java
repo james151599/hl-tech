@@ -25,19 +25,18 @@ public class ShiroServiceImpl implements ShiroService {
     Map<String, Map<String, Set<String>>> urp = new HashMap<>();
     Map<String, Set<String>> rolesPermissions = new HashMap<>();
     Set<String> permissions = new HashSet<>();
-    permissions.add("sys:role1:view");
-    permissions.add("sys:role1:update");
-    rolesPermissions.put("sys:role1", permissions);
+    permissions.add("user:*");
+    rolesPermissions.put("role1", permissions);
     urp.put("name1", rolesPermissions);
     rolesPermissions = new HashMap<>();
     permissions = new HashSet<>();
-    permissions.add("sys:role2:*");
-    rolesPermissions.put("sys:role2", permissions);
+    permissions.add("user:search,add,alter");
+    rolesPermissions.put("role2", permissions);
     urp.put("name2", rolesPermissions);
     rolesPermissions = new HashMap<>();
     permissions = new HashSet<>();
-    permissions.add("sys:*:*");
-    rolesPermissions.put("sys:admin", permissions);
+    permissions.add("user:search");
+    rolesPermissions.put("role3", permissions);
     urp.put("name3", rolesPermissions);
 
     return urp.get(userName);

@@ -19,12 +19,12 @@ public class CentralController {
   @ExceptionHandler(UnknownAccountException.class)
   @ResponseBody
   public String handleUnknownAccountException() {
-    return "no authentication";
+    return "incorrect username or password";
   }
 
   @ExceptionHandler(IncorrectCredentialsException.class)
   @ResponseBody
   public String handleIncorrectCredentialsException() {
-    return "no authentication";
+    return "incorrect username or password";
   }
 }

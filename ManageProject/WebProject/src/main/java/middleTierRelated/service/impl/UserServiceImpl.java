@@ -2,11 +2,13 @@ package middleTierRelated.service.impl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import middleTierRelated.entity.UserPO;
 import middleTierRelated.mapper.UserDao;
 import middleTierRelated.service.UserService;
 import middleTierRelated.vo.UserVO;
 
+@Service
 public class UserServiceImpl extends BaseServiceImpl<UserPO, UserDao> implements UserService {
 
   @Autowired

@@ -9,7 +9,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="${baseUrl}/user/login" method="post">
+	<form action="${baseUrl}/user/doLogin" method="post">
 		<div>
 			<input type="text" name="username" value="abc" />
 		</div>
