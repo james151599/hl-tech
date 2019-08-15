@@ -15,7 +15,10 @@ public class ShiroServiceImpl implements ShiroService {
     Map<String, String> up = new HashMap<String, String>();
     up.put("name1",
         "fd0c5c358de2471103e3282e0ba7b534367a58d68b2aaada8b484d9eff70e16aa31aa2f0de9d82fb8e8ce78c83614f1bd452357e1f791d6cbd155cc63f9929cf");
-    up.put("name2", "password2");
+    up.put("name2",
+        "fd0c5c358de2471103e3282e0ba7b534367a58d68b2aaada8b484d9eff70e16aa31aa2f0de9d82fb8e8ce78c83614f1bd452357e1f791d6cbd155cc63f9929cf");
+    up.put("name3",
+        "fd0c5c358de2471103e3282e0ba7b534367a58d68b2aaada8b484d9eff70e16aa31aa2f0de9d82fb8e8ce78c83614f1bd452357e1f791d6cbd155cc63f9929cf");
 
     return up;
   }
@@ -30,12 +33,12 @@ public class ShiroServiceImpl implements ShiroService {
     urp.put("name1", rolesPermissions);
     rolesPermissions = new HashMap<>();
     permissions = new HashSet<>();
-    permissions.add("user:search,add,alter");
+    permissions.add("user:view,add,alter");
     rolesPermissions.put("role2", permissions);
     urp.put("name2", rolesPermissions);
     rolesPermissions = new HashMap<>();
     permissions = new HashSet<>();
-    permissions.add("user:search");
+    permissions.add("user:view");
     rolesPermissions.put("role3", permissions);
     urp.put("name3", rolesPermissions);
 

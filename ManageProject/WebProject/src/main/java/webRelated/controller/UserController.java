@@ -8,15 +8,11 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import middleTierRelated.dto.LoginDTO;
-import middleTierRelated.entity.UserPO;
 import middleTierRelated.service.UserService;
-import middleTierRelated.vo.UserVO;
 import shiro.shiroItem.ShiroUtil;
 
 @RestController
@@ -36,8 +32,14 @@ public class UserController {
     return new ModelAndView("main");
   }
 
+  @GetMapping("/pay")
+  @RequiresPermissions("user:pay")
+  public ModelAndView pay() {
+    return new ModelAndView("doPay");
+  }
+
   @PostMapping("/doLogin")
-  public String doLogin(LoginDTO data) {
+  public ModelAndView doLogin(LoginDTO data) {
     Subject subject = SecurityUtils.getSubject();
     UsernamePasswordToken upt = new UsernamePasswordToken(data.getUsername(), data.getPassword());
     upt.setRememberMe(Boolean.valueOf(data.getRememberMe()));
@@ -49,42 +51,46 @@ public class UserController {
     // JavaSE应用需要自己定期调用session.touch();去更新最后访问时间
     ShiroUtil.setSessionValue("key", "value");
 
-    return "main";
+    return new ModelAndView("main");
   }
 
-  @GetMapping("/logout")
-  @ResponseBody
-  public String logout() {
-    SecurityUtils.getSubject().logout();
-    return "logout";
-  }
+  // @GetMapping("/logout")
+  // public ModelAndView logout() {
+  // SecurityUtils.getSubject().logout();
+  // return new ModelAndView("redirect:/login");
+  // }
 
   @GetMapping("/unauthorized")
   public String unauthorized() {
-    return "unauthorized";
+    return "filter: unauthorized";
   }
 
-  @PostMapping("/save")
-  @RequiresPermissions("user:add")
-  public int save(@RequestBody UserPO user) {
-    return userService.save(user);
+  @PostMapping("/filter")
+  public String filter() {
+    return "do something";
   }
 
-  @PostMapping("/removeById")
+  @PostMapping("/add")
+  public String add() {
+    SecurityUtils.getSubject().checkPermission("user:add");
+    return "do user add";
+  }
+
+  @PostMapping("/remove")
   @RequiresPermissions("user:remove")
-  public int removeById(String id) {
-    return userService.removeById(id);
+  public String removeById() {
+    return "do user remove";
   }
 
   @PostMapping("/alter")
   @RequiresPermissions("user:alter")
-  public int alter(@RequestBody UserPO user) {
-    return userService.alter(user);
+  public String alter() {
+    return "do user alter";
   }
 
-  @GetMapping("/getById")
-  @RequiresPermissions("user:search")
-  public UserVO getById(String id) {
-    return userService.getById(id);
+  @GetMapping("/view")
+  @RequiresPermissions("user:view")
+  public String getById() {
+    return "do user view";
   }
 }

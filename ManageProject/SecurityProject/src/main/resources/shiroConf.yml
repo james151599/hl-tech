@@ -1,11 +1,14 @@
-# 顺序执行过滤
+# 顺序执行过滤，一旦url匹配后面的过滤器就不被执行
 shiro:
   filter:
     urls:
+      /static/**: anon
       /user/login: anon
       /user/doLogin: anon
       /user/logout: logout
 # 需登录后访问的url
-      /pay/**: authc
+      /user/pay: authc
+# 过滤器验证权限
+      /user/filter: perms[user:filter]
 # 过滤器允许记住我访问的url
       /**: user

@@ -11,19 +11,23 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <body>
 	<div>
 		<label>testView</label> <input type="button" name="testButton1"
-			value="/user/doView" />
+			value="/user/view" />
 	</div>
 	<div>
 		<label>testUpdate</label> <input type="button" name="testButton2"
-			value="/user/doUpdate" />
+			value="/user/alter" />
 	</div>
 	<div>
 		<label>testInsert</label> <input type="button" name="testButton3"
-			value="/user/doInsert" />
+			value="/user/add" />
 	</div>
 	<div>
 		<label>testDelete</label> <input type="button" name="testButton4"
-			value="/user/doDelete" />
+			value="/user/remove" />
+	</div>
+	<div>
+		<label>testFilter</label> <input type="button" name="testButton5"
+			value="/user/filter" />
 	</div>
 
 	<script>

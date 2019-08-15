@@ -13,18 +13,18 @@ public class CentralController {
   @ExceptionHandler(UnauthorizedException.class)
   @ResponseBody
   public String handleUnauthorized() {
-    return "no authorization";
+    return "exception: no authorization";
   }
 
   @ExceptionHandler(UnknownAccountException.class)
   @ResponseBody
   public String handleUnknownAccountException() {
-    return "incorrect username or password";
+    return "exception: incorrect username or password";
   }
 
   @ExceptionHandler(IncorrectCredentialsException.class)
   @ResponseBody
   public String handleIncorrectCredentialsException() {
-    return "incorrect username or password";
+    return "exception: incorrect username or password";
   }
 }
