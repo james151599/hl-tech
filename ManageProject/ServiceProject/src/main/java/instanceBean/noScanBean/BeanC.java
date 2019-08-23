@@ -23,7 +23,7 @@ public class BeanC extends BeanD {
 
   @Override
   public String toString() {
-    return super.age + "   " + super.list1.get(0) + "   " + super.list2.get(0) + "   " + super.ms
-        + "   " + this.age;
+    return super.age + "   " + super.list1.get(0) + "   " + super.list2.get(0) + "   "
+        + super.ac.getResource("classpath:path/myTemplate.txt") + "   " + this.age;
   }
 }

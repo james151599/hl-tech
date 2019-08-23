@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
 import instanceAOP.Business;
 import instanceAOP.CommonBusiness;
 import instanceBean.noScanBean.ExampleBean;
@@ -24,6 +25,7 @@ public class TTT {
     ConfigurableApplicationContext cac =
         new ClassPathXmlApplicationContext("basicApp/spring_beans.xml");
     System.out.println(cac.getBean(ExampleBean.class).toString());
+    Resource template = cac.getResource("classpath:some/resource/path/myTemplate.txt");
     cac.registerShutdownHook();
     cac.close();
 
