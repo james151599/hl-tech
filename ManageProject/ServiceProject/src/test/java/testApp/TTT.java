@@ -7,7 +7,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import instanceAOP.Business;
 import instanceAOP.CommonBusiness;
-import instanceBean.ExampleBean;
+import instanceBean.noScanBean.ExampleBean;
 import instanceTran.Exam;
 import instanceTran.ExamService;
 import javaConfig.AOPConfig;

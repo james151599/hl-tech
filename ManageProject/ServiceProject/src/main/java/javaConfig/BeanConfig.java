@@ -17,14 +17,15 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.core.env.Environment;
 import org.springframework.web.context.annotation.SessionScope;
-import instanceBean.Foo;
+import instanceBean.noScanBean.Foo;
 import instanceBean.noScanBean.UserPreferences;
 import instanceBean.noScanBean.UserService;
 
 /*
  * All @Configuration classes are subclassed at startup-time with CGLIB. In the subclass, the child
- * method checks the container first for any cached (scoped) beans before it calls the parent method
- * and creates a new instance.
+ * method checks the container first for any cached(scoped) beans before it calls the parent method
+ * and creates a new instance. @Configuration classes are processed quite early during the
+ * initialization of the context
  */
 
 @Configuration
@@ -37,20 +38,22 @@ public class BeanConfig {
   @Autowired
   private Environment env;
 
+  @Value("${test.age}")
+  private String age;
+
   @Bean("first")
-  @Lazy(true)
   public List<String> firstList() {
-    return Arrays.asList(new String[] {env.getProperty("name")});
+    return Arrays.asList(new String[] {env.getProperty("test.name")});
   }
 
   @Bean("second")
-  @Lazy(true)
   public List<String> secondList() {
-    return Arrays.asList(new String[] {env.getProperty("age")});
+    return Arrays.asList(new String[] {age});
   }
 
   @Bean(name = "f", initMethod = "init", destroyMethod = "clean")
   @Scope("prototype")
+  @Lazy(true)
   @Description("Provides a basic example of a bean")
   public Foo foo(@Value("default value") String value) {
     return new Foo(value);

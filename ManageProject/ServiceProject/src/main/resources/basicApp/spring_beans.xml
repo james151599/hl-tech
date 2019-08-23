@@ -9,7 +9,7 @@
 
 	<!-- Arguments to the static factory method are supplied via <constructor-arg/> 
 		elements -->
-	<bean id="exampleBean" class="instanceBean.ExampleBean"
+	<bean id="exampleBean" class="instanceBean.noScanBean.ExampleBean"
 		factory-method="createInstance">
 		<constructor-arg name="arg1" ref="a" />
 		<constructor-arg name="arg2" value="123" />
@@ -17,16 +17,16 @@
 
 	<!-- The depends-on attribute can explicitly force one or more beans to 
 		be initialized before the bean using this element is initialized -->
-	<bean id="a" class="instanceBean.BeanA" init-method="init"
-		destroy-method="clean" depends-on="c,f">
+	<bean id="a" class="instanceBean.noScanBean.BeanA"
+		init-method="init" destroy-method="clean" depends-on="c,f">
 		<property name="property" value="abc" />
 		<property name="beanE" ref="e" />
 	</bean>
 
-	<bean id="c" class="instanceBean.BeanC" parent="d"
+	<bean id="c" class="instanceBean.noScanBean.BeanC" parent="d"
 		lazy-init="true">
 		<property name="age" value="override" />
 	</bean>
 
-	<bean id="d" class="instanceBean.BeanD" abstract="true" />
+	<bean id="d" class="instanceBean.noScanBean.BeanD" abstract="true" />
 </beans>

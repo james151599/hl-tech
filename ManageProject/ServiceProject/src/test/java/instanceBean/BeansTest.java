@@ -8,6 +8,7 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import instanceBean.noScanBean.ExampleBean;
 import instanceBean.noScanBean.UserService;
 import javaConfig.BeanConfig;
 

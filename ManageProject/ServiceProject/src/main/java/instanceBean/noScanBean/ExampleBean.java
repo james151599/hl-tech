@@ -1,4 +1,4 @@
-package instanceBean;
+package instanceBean.noScanBean;
 
 public class ExampleBean {
 

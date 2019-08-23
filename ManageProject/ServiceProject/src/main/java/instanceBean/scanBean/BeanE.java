@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
-import instanceBean.BeanC;
+import instanceBean.noScanBean.BeanC;
 
 @Component("e")
 @DependsOn({"c"})

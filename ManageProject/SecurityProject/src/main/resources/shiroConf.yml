@@ -10,5 +10,5 @@ shiro:
       /user/pay: authc
 # 过滤器验证权限
       /user/filter: perms[user:filter]
-# 过滤器允许记住我访问的url
+# 过滤器允许已登录或记住我访问的url
       /**: user
