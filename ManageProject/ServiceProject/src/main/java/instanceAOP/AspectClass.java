@@ -36,7 +36,7 @@ public class AspectClass implements Ordered {
   public void businessDefine() {}
 
   @Pointcut("execution(String instanceAOP..*.common*(..))")
-  public void commonDefine() {}
+  public void str_commonDefine() {}
 
   @Pointcut("within(instanceAOP..*)")
   public void allDefine() {}
@@ -53,7 +53,7 @@ public class AspectClass implements Ordered {
     System.out.println("weave afterMethod");
   }
 
-  @AfterReturning(pointcut = "businessDefineAnd() or commonDefine()", returning = "retVal")
+  @AfterReturning(pointcut = "businessDefineAnd() or str_commonDefine()", returning = "retVal")
   public void afterSuccessMethod(Object retVal) {
     System.out.println("weave afterSuccessMethod: " + retVal);
   }
@@ -88,7 +88,7 @@ public class AspectClass implements Ordered {
     return retVal;
   }
 
-  @Before("commonDefine() && args(str)")
+  @Before("str_commonDefine() && args(str)")
   public void beforeMethod(String str) {
     System.out.println("weave beforeMethod: " + str);
   }
