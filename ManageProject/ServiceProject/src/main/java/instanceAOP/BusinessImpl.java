@@ -1,8 +1,8 @@
 package instanceAOP;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service("bi")
 public class BusinessImpl extends BaseBusinessImpl implements Business {
 
 }

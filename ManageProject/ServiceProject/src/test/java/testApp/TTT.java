@@ -34,8 +34,8 @@ public class TTT {
     cb.commonBusinessOne("abc");
     cb.commonBusinessTwo();
     Business bi = ac.getBean(Business.class);
-    bi.businessOne();
-    bi.businessTwo();
+    bi.businessOne(null, '1');
+    bi.businessTwo(null, '2');
 
     ApplicationContext ac2 = new AnnotationConfigApplicationContext(TranConfig.class);
     ExamService es = (ExamService) ac2.getBean("esi");

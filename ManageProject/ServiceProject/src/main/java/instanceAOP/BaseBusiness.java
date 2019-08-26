@@ -1,7 +1,7 @@
 package instanceAOP;
 
 public interface BaseBusiness {
-  void businessOne();
+  void businessOne(Object p1, char p2);
 
-  void businessTwo();
+  void businessTwo(Object p1, char p2);
 }

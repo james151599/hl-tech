@@ -27,9 +27,9 @@ public class AOPTest {
     cb.commonBusinessOne("abc");
     cb.commonBusinessTwo();
     cb.commonBusinessThree(7);
-    ib.businessOne();
+    ib.businessOne(null, '1');
     expectedEx.expect(RuntimeException.class);
     expectedEx.expectMessage("let afterFailedMethod execute");
-    ib.businessTwo();
+    ib.businessTwo(null, '2');
   }
 }

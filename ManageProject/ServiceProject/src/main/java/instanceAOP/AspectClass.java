@@ -10,6 +10,11 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.core.Ordered;
 
+/*
+ * in packages com.xyz.someapp.abc.service and com.xyz.someapp.def.service then the pointcut
+ * expression "execution(* com.xyz.someapp..service.*.*(..))" could be used instead
+ */
+
 @Aspect
 public class AspectClass implements Ordered {
 
@@ -42,10 +47,10 @@ public class AspectClass implements Ordered {
   public void allDefine() {}
 
   // can not replace "&&" to "and"
-  @Pointcut("execution(* instanceAOP.CommonBusiness.*(int)) && args(num)")
+  @Pointcut("execution(* instanceAOP.CommonBusiness.*(..)) && args(num)")
   public void commonDefineNum(int num) {}
 
-  @Pointcut("businessDefine() and allDefine()")
+  @Pointcut("businessDefine() && allDefine()")
   public void businessDefineAnd() {}
 
   @After("businessDefine()")
@@ -64,9 +69,9 @@ public class AspectClass implements Ordered {
   }
 
   // a simple caching aspect could return a value from a cache
-  // if it has one and invoke proceed() if it does not
-  @Around("businessDefine()")
-  public Object aroundMethod(ProceedingJoinPoint pjp) {
+  // if it has one, and invoke proceed() if it does not
+  @Around(value = "target(instanceAOP.BaseBusiness) && args(obj,c)")
+  public Object aroundMethod(ProceedingJoinPoint pjp, Object obj, char c) {
     System.out.println("weave aroundMethod");
     int numAttempts = 0;
     Object retVal = null;
@@ -74,7 +79,7 @@ public class AspectClass implements Ordered {
 
     while (numAttempts < this.maxRetries) {
       try {
-        retVal = pjp.proceed();
+        retVal = pjp.proceed(new Object[] {obj, c});
         break;
       } catch (Throwable e) {
         numAttempts++;
@@ -86,6 +91,11 @@ public class AspectClass implements Ordered {
     }
 
     return retVal;
+  }
+
+  @Before("bean(bi)")
+  public void beforeMethod() {
+    System.out.println("weave beforeMethod");
   }
 
   @Before("str_commonDefine() && args(str)")
