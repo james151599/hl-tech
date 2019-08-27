@@ -96,7 +96,7 @@ public class ExamUtils {
     public Exam mapRow(ResultSet rs, int rowNum) throws SQLException {
       try {
         Exam obj = new Exam();
-        obj.setId(rs.getLong("id"));
+        obj.setId(rs.getString("id"));
         obj.setName(rs.getString("name"));
         obj.setCourse(rs.getString("course"));
         obj.setScore(rs.getInt("score"));

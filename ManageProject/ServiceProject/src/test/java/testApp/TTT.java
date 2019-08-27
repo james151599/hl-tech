@@ -10,7 +10,7 @@ import instanceAOP.Business;
 import instanceAOP.CommonBusiness;
 import instanceBean.noScanBean.ExampleBean;
 import instanceTran.Exam;
-import instanceTran.ExamService;
+import instanceTran.service.ExamService;
 import javaConfig.AOPConfig;
 import javaConfig.TranConfig;
 

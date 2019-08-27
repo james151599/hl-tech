@@ -1,6 +1,7 @@
-package instanceTran;
+package instanceTran.service;
 
 import java.util.List;
+import instanceTran.Exam;
 
 public interface ExamService {
 

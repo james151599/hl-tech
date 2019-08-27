@@ -16,7 +16,8 @@
 
 	<import resource="classpath:spring_db.xml" />
 
-	<!-- 参考Version 5.1.3.RELEASE(Multiple Transaction Managers with @Transactional) -->
+	<!-- 参考1.4.6. Using @Transactional(Multiple Transaction Managers with @Transactional) -->
+	<!-- enable the configuration of transactional behavior based on annotations -->
 	<tx:annotation-driven
 		transaction-manager="txManager" />
 
@@ -34,7 +35,7 @@
 
 	<aop:config>
 		<aop:pointcut id="examOperation"
-			expression="execution(* instanceTran.ExamService.*(..)) and bean(esi)" />
+			expression="execution(* instanceTran.service..*Service.*(..)) and bean(esi)" />
 		<!-- for one pointcut and one advice, for multiple using <aop:aspect> -->
 		<!-- will execute after the AspectClass advice, order value is higher than 
 			the aspect -->
