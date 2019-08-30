@@ -49,6 +49,16 @@ public class ExamUtils {
         });
   }
 
+  /*
+   * The batch update methods for this call returns an array of int arrays that contain an array
+   * entry for each batch with an array of the number of affected rows for each update. The top
+   * level array’s length indicates the number of batches executed and the second level array’s
+   * length indicates the number of updates in that batch. The number of updates in each batch
+   * should be the batch size provided for all batches (except that the last one that might be
+   * less), depending on the total number of update objects provided. The update count for each
+   * update statement is the one reported by the JDBC driver. If the count is not available, the
+   * JDBC driver returns a value of -2
+   */
   public int[][] insertExams(final List<String[]> many) {
     return this.jdbcTemplate.batchUpdate("insert into exam_info(name,course,score) values(?,?,?)",
         many, 3, new ParameterizedPreparedStatementSetter<String[]>() {

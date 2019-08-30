@@ -9,3 +9,14 @@ CREATE TABLE `exam_info` (
   `img` longblob,
   PRIMARY KEY (`id`)
 )
+
+CREATE PROCEDURE read_actor (
+    IN in_id INTEGER,
+    OUT out_first_name VARCHAR(100),
+    OUT out_last_name VARCHAR(100),
+    OUT out_birth_date DATE)
+BEGIN
+    SELECT first_name, last_name, birth_date
+    INTO out_first_name, out_last_name, out_birth_date
+    FROM t_actor where id = in_id;
+END;
