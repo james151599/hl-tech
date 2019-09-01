@@ -4,11 +4,16 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import shiro.shiroItem.MyRealm;
 import shiro.shiroService.ShiroService;
 
 @Service
 public class ShiroServiceImpl implements ShiroService {
+
+  @Autowired
+  private MyRealm mr;
 
   @Override
   public Map<String, String> namePassword() {
@@ -43,5 +48,10 @@ public class ShiroServiceImpl implements ShiroService {
     urp.put("name3", rolesPermissions);
 
     return urp.get(userName);
+  }
+
+  @Override
+  public void clearAuthorizeCache() {
+    mr.clearAuthorizationCache();
   }
 }

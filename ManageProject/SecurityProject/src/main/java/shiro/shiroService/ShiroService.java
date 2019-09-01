@@ -8,4 +8,6 @@ public interface ShiroService {
   Map<String, String> namePassword();
 
   Map<String, Set<String>> userRolesPermissions(String userName);
+
+  void clearAuthorizeCache();
 }

@@ -41,12 +41,13 @@ CREATE TABLE `sys_role_menu` (
 
 CREATE TABLE `sys_menu` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `menu_name` varchar(45) NOT NULL,
-  `parent_id` bigint(20) NOT NULL,
+  `menu_name` varchar(45) NOT NULL,  
   `menu_sort` int(11) DEFAULT NULL,
   `menu_type` char(1) NOT NULL,
   `menu_href` varchar(45) DEFAULT NULL,
   `permission` varchar(45) DEFAULT NULL,
+  `parent_id` bigint(20) NOT NULL,
+  `parent_ids` bigint(200 NOT NULL,
   `status` char(1) NOT NULL DEFAULT '1',
   `create_date` datetime DEFAULT NULL,
   `update_date` datetime DEFAULT NULL,

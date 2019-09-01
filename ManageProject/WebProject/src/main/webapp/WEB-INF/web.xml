@@ -27,7 +27,7 @@
 		<servlet-name>SpringDispatcher</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
+	<!-- spring bean实现了Filter接口，默认是由spring容器来管理其生命周期的(不是由tomcat这种服务器容器来管理)。如果设置targetFilterLifecycle为true则spring来管理Filter.init()和Filter.destroy()，若为false则这两个方法失效 -->
 	<filter>
 		<filter-name>ShiroFilterProxy</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
