@@ -1,7 +1,5 @@
 package shiro.shiroItem;
 
-import java.util.Map;
-import java.util.Set;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -35,13 +33,11 @@ public class MyRealm extends AuthorizingRealm {
     if (principals == null) {
       throw new AuthorizationException("PrincipalCollection method argument cannot be null.");
     }
-    String username = (String) getAvailablePrincipal(principals);
+    String username = (String) super.getAvailablePrincipal(principals);
 
     SimpleAuthorizationInfo sai = new SimpleAuthorizationInfo();
-    for (Map.Entry<String, Set<String>> each : this.ss.userRolesPermissions(username).entrySet()) {
-      sai.addRole(each.getKey());
-      sai.addStringPermissions(each.getValue());
-    }
+    sai.setRoles(this.ss.getUserRoles(username));
+    sai.setStringPermissions(this.ss.getUserPermissions(username));
 
     return sai;
   }
@@ -52,13 +48,13 @@ public class MyRealm extends AuthorizingRealm {
     UsernamePasswordToken upToken = (UsernamePasswordToken) token;
     String username = upToken.getUsername();
     // String username = (String) token.getPrincipal();
-    Map<String, String> user = this.ss.namePassword();
+    String password = this.ss.getUserPassword(username);
 
-    if (username == null || user.get(username) == null) {
+    if (username == null || password == null) {
       throw new UnknownAccountException("UnknownAccountException");
     }
 
-    return new SimpleAuthenticationInfo(username, user.get(username),
+    return new SimpleAuthenticationInfo(username, password,
         ByteSource.Util.bytes("44bab1b7e615547b3ead081f96edded0"), getName());
   }
 

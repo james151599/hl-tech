@@ -1,5 +1,6 @@
 package instanceAOP;
 
+import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -17,6 +18,8 @@ import org.springframework.core.Ordered;
 
 @Aspect
 public class AspectClass implements Ordered {
+
+  private static Logger logger = Logger.getLogger("myLog");
 
   private static final int DEFAULT_MAX_RETRIES = 3;
 
@@ -37,7 +40,7 @@ public class AspectClass implements Ordered {
     this.order = order;
   }
 
-  @Pointcut("execution(public * instanceAOP.BaseBusiness.*(..))")
+  @Pointcut("execution(public * instanceAOP.Business.*(..))")
   public void businessDefine() {}
 
   @Pointcut("execution(String instanceAOP..*.common*(..))")
@@ -70,7 +73,7 @@ public class AspectClass implements Ordered {
 
   // a simple caching aspect could return a value from a cache
   // if it has one, and invoke proceed() if it does not
-  @Around(value = "target(instanceAOP.BaseBusiness) && args(obj,c)")
+  @Around("target(instanceAOP.Business) && args(obj,c)")
   public Object aroundMethod(ProceedingJoinPoint pjp, Object obj, char c) {
     System.out.println("weave aroundMethod");
     int numAttempts = 0;
@@ -82,10 +85,13 @@ public class AspectClass implements Ordered {
         retVal = pjp.proceed(new Object[] {obj, c});
         break;
       } catch (Throwable e) {
-        numAttempts++;
         ta = e;
       }
+      numAttempts++;
     }
+
+    logger.info(pjp.getSignature().getName() + " execute " + numAttempts);
+
     if (numAttempts == this.maxRetries) {
       throw new RuntimeException("let afterFailedMethod execute", ta);
     }
