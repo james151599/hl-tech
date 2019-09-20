@@ -20,6 +20,7 @@ import org.springframework.web.context.annotation.SessionScope;
 import instanceBean.noScanBean.Foo;
 import instanceBean.noScanBean.UserPreferences;
 import instanceBean.noScanBean.UserService;
+import instanceBean.noScanBean.simulateMybatis.MyScanner;
 
 /*
  * All @Configuration classes are subclassed at startup-time with CGLIB. In the subclass, the child
@@ -31,11 +32,12 @@ import instanceBean.noScanBean.UserService;
 @Configuration
 @PropertySource("classpath:instanceBean/basicApp.properties")
 @ComponentScan(basePackages = {"instanceBean"},
-    excludeFilters = @Filter(type = FilterType.REGEX, pattern = ".noScanBean..*"))
+    excludeFilters = {@Filter(type = FilterType.REGEX, pattern = ".noScanBean..*")})
 // get all the matching resources in the class loader hierarchy
 // classpath*:*.xml might not retrieve files from the root of jar files but rather only from the
 // root of expanded directories
 @ImportResource(locations = {"classpath*:basicApp/spring_beans.xml"})
+@MyScanner
 public class BeanConfig {
 
   @Autowired
